@@ -1,0 +1,37 @@
+{
+    "on_boarding_title_page_one":"this is title",
+    "on_boarding_title_page_two":"",
+    "on_boarding_title_page_three":"",
+
+
+    "title_login_screen":"",
+    "phone":"",
+    "login":"",
+    "dont_have_account":"",
+    "register_here":"",
+
+
+    "title_register_screen":"",
+    "name":"",
+    "loacation":"",
+    "upload_your_image":"",
+    "regisger":"",
+    "already_have_account":"",
+    "login_here":"",
+
+
+
+
+    "search_hint_home_scree":"",
+    "container_text_home_screen":"",
+
+
+
+    "home":"",
+    "likes":"",
+    "cart":""
+
+
+
+
+}
