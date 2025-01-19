@@ -3,15 +3,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:order_app/core/constant/colors/colors.dart';
 import 'package:order_app/core/helper/extention.dart';
+import 'package:order_app/core/models/sub_models/cart_product_model_with_image.dart';
 import 'package:order_app/core/models/sub_models/orders_item_model.dart';
-import 'package:order_app/features/orders/presentation/cubit/admin_response_cubit.dart';
-import 'package:order_app/features/orders/presentation/cubit/admin_response_state.dart';
+import 'package:order_app/core/routing/routes.dart';
 import 'package:order_app/features/orders/presentation/cubit/orders_cubit.dart';
 import 'package:order_app/features/orders/presentation/cubit/orders_state.dart';
 
 class OrderStatusScreen extends StatefulWidget {
-  const OrderStatusScreen({super.key, required this.ordersItemModel});
-
+  const OrderStatusScreen({super.key, 
+  required this.ordersItemModel
+  });
   final OrdersItemModel ordersItemModel;
 
   @override
@@ -24,9 +25,9 @@ class _OrderStatusScreenState extends State<OrderStatusScreen> {
     switch (status) {
       case 'Waiting for response':
         return 0;
-      case 'Preparing':
+      case 'Period of editing':
         return 1;
-      case 'In Way':
+      case 'In way':
         return 2;
       case 'Delivered':
         return 3;
@@ -36,46 +37,20 @@ class _OrderStatusScreenState extends State<OrderStatusScreen> {
   }
 
   @override
+  void initState() {
+    // TODO: implement initState
+    currentStep = _getStepFromStatus(widget.ordersItemModel.status);
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text(
-          "Order Details",
-          style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
-        ),
-        backgroundColor: Colors.white,
-        actions: [
-          IconButton(
-            onPressed: () {
-              context.read<OrdersCubit>().eitherFailureOrRemoveOrder(
-                    id: widget.ordersItemModel.id,
-                );
-            },
-            icon: const Icon(Icons.delete, color: Colors.red),
-          ),
-          IconButton(
-            onPressed: () {
-              context.pushNamed('/editOrder');
-            },
-            icon: const Icon(Icons.edit),
-          ),
-        ],
-        elevation: 1,
-      ),
-      body: MultiBlocListener(
+      bottomSheet:MultiBlocListener(
         listeners: [
-          BlocListener<AdminResponseCubit, AdminResponseState>(
-            listener: (context, state) {
-              if (state is AdminResponseSuccessfully) {
-                setState(() {
-                  currentStep = 1; // Set currentStep to 1 when Admin response is successful
-                });
-              }
-            },
-          ),
           BlocListener<OrdersCubit, OrdersState>(
             listener: (context, state) {
-              if (state is OrderConfiramtionSuccessfully) {
+              if (state is OrderConfiramtionSuccessfully) { 
                 setState(() {
                   currentStep = 2;
                 });
@@ -83,26 +58,142 @@ class _OrderStatusScreenState extends State<OrderStatusScreen> {
                 setState(() {
                   currentStep = 3;
                 });
-              } else if (state is OrdersSuccessfully) {
-                setState(() {
-                  currentStep = _getStepFromStatus(widget.ordersItemModel.status);
-                });
               }
             },
           ),
         ],
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            _buildOrderInfoCard(),
-            _buildOrderStatusCard(context, currentStep),
+        
+        child: Container(
+          height: 200,
+        margin: const EdgeInsets.all(16),
+        padding: const EdgeInsets.all(16),
+        decoration: BoxDecoration(
+          //color: Colors.white,
+          gradient: const LinearGradient(colors: [
+            primaryColor,
+            secondColor
+          ]) ,
+          borderRadius: BorderRadius.circular(20),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.grey.shade300,
+              blurRadius: 5,
+              offset: const Offset(0, 2),
+            ),
           ],
         ),
+        child: Column(
+          children: [
+            Text(
+              "Order Status:${widget.ordersItemModel.status}",
+              
+              style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+            ),
+            const SizedBox(height: 16),
+            if (currentStep == 1 || currentStep == 2)
+              TimerWidget(
+                minutes: 1,
+                onTimeout: () {
+                  if (currentStep == 1) {
+                    context.read<OrdersCubit>().eitherFailureOrOrderConfirmation(
+                          orderId: widget.ordersItemModel.id,
+                        );
+                        widget.ordersItemModel.status = "In Way";
+                        setState(() {
+                          currentStep = 2;
+                        });
+                  } else if (currentStep == 2) {
+                    context.read<OrdersCubit>().eitherFailureOrOrderDelivared(
+                          id: widget.ordersItemModel.id,
+                        );
+                        widget.ordersItemModel.status = "Delivered";
+                        setState(() {
+                          currentStep = 3;
+                        });
+                  }
+                },
+              ),
+            const SizedBox(height: 16),
+            _buildProgressBar(currentStep),
+          ],
+        ),
+            ),
+      ) ,
+      appBar: AppBar(
+        title: const Text(
+          "Order Details",
+          style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
+        ),
+        backgroundColor: Colors.white,
+        actions: [
+  IconButton(
+    onPressed: (){
+      if(widget.ordersItemModel.status == "Waiting for response") // Waiting for response
+          {
+            context.read<OrdersCubit>().eitherFailureOrRemoveOrder(
+                  id: widget.ordersItemModel.id,
+              );
+              widget.ordersItemModel.status = "Deleted";
+          }
+        else if(widget.ordersItemModel.status == "Deleted") {
+          context.read<OrdersCubit>().eitherFailureOrRestore(id: widget.ordersItemModel.id);
+          widget.ordersItemModel.status = "Waiting for response";
+          setState(() {
+            currentStep = 0;
+          });
+        }
+        else if(widget.ordersItemModel.status == "Rejected") {
+          context.read<OrdersCubit>().eitherFailureOrRestore(id: widget.ordersItemModel.id);
+          widget.ordersItemModel.status = "Waiting for response";
+          setState(() {
+            currentStep = 0;
+          });
+        }
+        else {
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(content: Text("Cannot delete this order in the current state")),
+          );
+        }
+    },
+    icon: widget.ordersItemModel.status == "Deleted" ||
+    widget.ordersItemModel.status == "Rejected"  ? Icon(Icons.refresh, color: Colors.red): const Icon(Icons.delete, color: Colors.red),
+  ),
+  IconButton(
+    onPressed: (currentStep == 0 || currentStep == 1) 
+        ? () {
+          context.pushNamed(Routes.entryPoint);
+          }
+        : () {
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(content: Text("Cannot edit this order in the current state")),
+          );
+        }, 
+    icon: const Icon(Icons.edit),
+  ),
+],
+
+        elevation: 1,
       ),
-    );
+      body:
+      Column(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Expanded(
+              child: ListView.separated(
+                    //padding: const EdgeInsets.all(20),
+                    itemBuilder: (context, index) => buildOrderInfoCard(
+                      product: widget.ordersItemModel.cartModel.cartItemModel!.products![index]
+                    ),
+                    separatorBuilder: (context, index) => const SizedBox(height: 10),
+                    itemCount:widget.ordersItemModel.cartModel.cartItemModel!.products!.length,
+                  ),
+            ),
+          ],
+        ),
+      );
   }
 
-  Widget _buildOrderInfoCard() {
+Widget buildOrderInfoCard({required CartProductModelWithImage product}) {
     return Card(
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(16),
@@ -116,8 +207,12 @@ class _OrderStatusScreenState extends State<OrderStatusScreen> {
           children: [
             ClipRRect(
               borderRadius: BorderRadius.circular(12),
-              child: Image.asset(
-                "assets/images/product_images/shope2.jpg",
+              child:product.image == null? 
+              Image.asset("assets/images/product_images/shope2.jpg",width: 80,
+                height: 80,
+                fit: BoxFit.cover,):
+              Image.network(
+              product.image ?? "",
                 width: 80,
                 height: 80,
                 fit: BoxFit.cover,
@@ -125,20 +220,20 @@ class _OrderStatusScreenState extends State<OrderStatusScreen> {
             ),
             const SizedBox(width: 16),
             Expanded(
-              child: Column(
+              child:  Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const Text(
+                  Text(
                     // ! todo
-                    "ordersItemModel.name",
-                    style: TextStyle(
+                    product.cartProductModel.name,
+                    style: const TextStyle(
                       fontSize: 16,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
                   const SizedBox(height: 8),
                   Text(
-                    "Quantity: ${widget.ordersItemModel}",
+                    "Quantity:${product.cartProductModel.quantity}",
                     style: const TextStyle(
                       fontSize: 14,
                       color: Colors.grey,
@@ -146,7 +241,7 @@ class _OrderStatusScreenState extends State<OrderStatusScreen> {
                   ),
                   const SizedBox(height: 8),
                   Text(
-                    "Total: ${widget.ordersItemModel} SYP",
+                    "Total:${product.cartProductModel.totalPrice} SYP",
                     style: const TextStyle(
                       fontSize: 16,
                       fontWeight: FontWeight.bold,
@@ -163,49 +258,7 @@ class _OrderStatusScreenState extends State<OrderStatusScreen> {
   }
 
   /// Order Status Card
-  Widget _buildOrderStatusCard(BuildContext context, int currentStep) {
-    return Container(
-      margin: const EdgeInsets.all(16),
-      padding: const EdgeInsets.all(16),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(20),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.grey.shade300,
-            blurRadius: 5,
-            offset: const Offset(0, 2),
-          ),
-        ],
-      ),
-      child: Column(
-        children: [
-          Text(
-            "Order Status: ${widget.ordersItemModel.status}",
-            style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-          ),
-          const SizedBox(height: 16),
-          if (currentStep == 1 || currentStep == 2)
-            TimerWidget(
-              minutes: 3,
-              onTimeout: () {
-                if (currentStep == 1) {
-                  context.read<OrdersCubit>().eitherFailureOrOrderConfirmation(
-                        orderId: widget.ordersItemModel.id,
-                      );
-                } else if (currentStep == 2) {
-                  context.read<OrdersCubit>().eitherFailureOrOrderDelivared(
-                        id: widget.ordersItemModel.id,
-                      );
-                }
-              },
-            ),
-          const SizedBox(height: 16),
-          _buildProgressBar(currentStep),
-        ],
-      ),
-    );
-  }
+ 
 
   /// Progress Bar
   Widget _buildProgressBar(int currentStep) {
@@ -228,16 +281,16 @@ class _OrderStatusScreenState extends State<OrderStatusScreen> {
       children: [
         CircleAvatar(
           radius: 20,
-          backgroundColor: step <= currentStep ? primaryColor : Colors.grey,
+          backgroundColor: step <= currentStep ? Colors.white : Colors.grey,
           child:
-              Icon(icon, color: step <= currentStep ? Colors.white : Colors.black),
+              Icon(icon, color: step <= currentStep ? primaryColor : Colors.black),
         ),
         const SizedBox(height: 4),
         Text(
           label,
           style: TextStyle(
             fontSize: 12,
-            color: step <= currentStep ? primaryColor : Colors.grey,
+            color: step <= currentStep ? Colors.white : Colors.grey,
           ),
         ),
       ],
@@ -248,7 +301,7 @@ class _OrderStatusScreenState extends State<OrderStatusScreen> {
     return Expanded(
       child: Container(
         height: 2,
-        color: step < currentStep ? primaryColor : Colors.grey,
+        color: step < currentStep ? Colors.white : Colors.grey,
       ),
     );
   }
@@ -262,6 +315,7 @@ class TimerWidget extends StatefulWidget {
   @override
   _TimerWidgetState createState() => _TimerWidgetState();
 }
+
 
 class _TimerWidgetState extends State<TimerWidget> {
   late Timer _timer;

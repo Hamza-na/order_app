@@ -11,7 +11,7 @@ class AdminResponseRemoteDataSource {
   });
 
   Future<dynamic>adminResponse({required bool answer,required int orderId})async{
-    final response = await api.post('${EndPoints.adminResponse}/$orderId',queryParameters: {
+    final response = await api.get('${EndPoints.adminResponse}/$orderId',queryParameters: {
       'approval':answer
     });
     return response;

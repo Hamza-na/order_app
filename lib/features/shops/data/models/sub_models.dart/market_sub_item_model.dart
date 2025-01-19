@@ -16,12 +16,14 @@ class MarketSubItemModel extends MarketSubItemEntity {
       required this.updatedAt});
 
   factory MarketSubItemModel.fromJson(Map<String, dynamic> json) {
+    
+    
     return MarketSubItemModel(
         id:json[ApiKey.id],
         name: json[ApiKey.name],
         location: json[ApiKey.location],
         description: json[ApiKey.description],
-        image: json[ApiKey.image],
+        image:json[ApiKey.image],
         createdAt: json[ApiKey.createdAt],
         updatedAt: json[ApiKey.updatedAt]);
   }

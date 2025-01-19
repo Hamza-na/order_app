@@ -1,1 +1,104 @@
-{}
+{
+    "on_boarding_title_page_one":"Crave It? Order It!",
+    "on_boarding_title_page_two":"Track Your Meal’s Journey",
+    "on_boarding_title_page_three":"Exclusive Deals for Foodies",
+
+    "on_boarding_sub_title_page_one":"Explore a wide range of cuisines and restaurants at your fingertips. Satisfy your cravings anytime!",
+    "on_boarding_sub_title_page_two":"From kitchen to your doorstep, follow your meal in real-time. Fresh and fast, every time.",
+    "on_boarding_sub_title_page_three":"Enjoy discounts, offers, and rewards on your favorite meals. Deliciousness made affordable!",
+
+
+    "title_login_screen":"Login to your account",
+    "phone":"Phone :",
+    "phone_confiramtion":"PhoneConfiramtion",
+    "phone_condition_count_number":"phone must be 10 number",
+    "phone_condition_number":"Input must contain only numbers",
+    "phone_confirmation_condition":"phone not match",
+    "login":"LOGIN",
+    "dont_have_account":"Don't have an account?",
+    "register_here":"Register here",
+    "create_new_account":"Create New Account",
+    "validate_null":"value cannot be empty",
+
+    "title_register_screen":"",
+    "name":"Name :",
+    "name_condition":"name must me between 3 and 20 char",
+
+    
+    "loacation":"Location :",
+    "loacation_condition":"Field must be between 3 and 200 characters",
+    "upload_your_image":"Upload Your Image :",
+    "regisger":"REGISTER",
+    "already_have_account":"Already have an account?",
+    "login_here":"Login here",
+
+
+
+
+    "search_hint_home_screen":"Search resturant...",
+    "search_hint_product_screen":"Search for food...",
+
+    "container_text_home_screen":"Discover Amazing Restaurants!",
+
+    "app_name":"App Name",
+    "app_bar_products_screen":"Products Screen",
+    "app_bar_products_details_screen":"Product Details",
+
+
+    "details":"Details",
+    "time":"15 min",
+    "rating":"4.5 Rating",
+    "show_cart":"Show Cart",
+    "check_out":"Chckout",
+
+    "price":"Price",
+    "delivery_cost":"delivery Cost:",
+    "delivery_time":"Delivary Time:",
+    
+
+
+    "address":"Address",
+    "order":"Order",
+    "update":"Update",
+    "no_address_selected":"No address selected",
+    "change":"change",
+    "edit_address":"Edit Address",
+    "location_name":"locatinName",
+    "location_name_hint":"example: Home, Work , Gym ,School, ex",
+    "town_name":"town",
+    "town_hint":"Midan Town",
+    "street":"Street",
+    "address_details":"Address Details",
+    "address_detail_hint":"example: first Build, second floor....",
+    "waiting_for_response":"Waiting for response",
+    "in_way":"In Way",
+    "delivered":"Delivered",
+    "period_of_editing":"Period of editing",
+    "order_status":"Order Status",
+    "order_details":"Order Details",
+    "quantity":"Quantity",
+    "total_price":"Total Price",
+
+    "my_orders" :"My Orders",
+
+
+    "profile":"profile",
+    "edit_profile":"Edit Profile",
+    "language":"Language",
+    "select_Language":"Select Language",
+    "cancel":"cancel",
+    "no_change":"No changes to update",
+    "log_out":"LogOut",
+
+
+
+
+    "home":"Home",
+    "likes":"Likes",
+    "cart":"Cart",
+    "settings":"Settings"
+
+
+
+
+}

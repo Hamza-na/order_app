@@ -10,8 +10,9 @@ final class LoginLoading extends LoginState{}
 
 final class LoginFailure extends LoginState{
   final String errMessage;
+  final String arErrMessage;
 
-  LoginFailure({required this.errMessage});
+  LoginFailure({required this.errMessage, required this.arErrMessage});
 }
 final class LoginSuccessfully extends LoginState{
   final AuthResponseEntitiy loginResponseEntitiy;

@@ -1,4 +1,5 @@
 import 'package:dartz/dartz.dart';
+import 'package:dio/dio.dart';
 import 'package:order_app/core/errors/expentions.dart';
 import 'package:order_app/core/errors/failure.dart';
 import 'package:order_app/features/sign_up/data/datasources/sign_up_remote_data_source.dart';
@@ -13,8 +14,8 @@ class SignUpRepositoryImpl extends SignUpRepository {
   SignUpRepositoryImpl({
     required this.signUpRemoteDataSource,
   });
- @override
- Future<Either<Failure, AuthResponseEntitiy>> signup({
+@override
+Future<Either<Failure, AuthResponseEntitiy>> signup({
   required SignUpBodyModel signUpBodyModel,
 }) async {
   try {
@@ -23,19 +24,19 @@ class SignUpRepositoryImpl extends SignUpRepository {
     );
     final entity = response.toAuthResponseEntitiy(response);
     return Right(entity);
-  } on ServerException catch (e) {
-    return Left(Failure(
-      errMessage: e.errorModel.errorMessage,
-    ));
-  // } on DioException catch (e) {
-  //   handleDioException(e);
-  //   return Left(Failure(errMessage: "Unhandled Dio exception."));
-  // } catch (e) {
-  //   return Left(Failure(errMessage: "An unexpected error occurred."));
-  // }
+  } on DioException catch (e) {
+    try {
+      handleDioException(e);
+    } catch (exception) {
+      if (exception is ServerException) {
+        return Left(Failure(errMessage: exception.errorModel.errorMessage,arErrMessage:exception.errorModel.arErrorMessage ));
+      }
+    }
+    return Left(Failure(errMessage: "An unexpected error occurred.",arErrMessage: "خطأ غير معروف"));
+  } catch (e) {
+    return Left(Failure(errMessage: e.toString(),arErrMessage:"Exception" ));
+  }
+}
 }
 
-  
-}
-}
 

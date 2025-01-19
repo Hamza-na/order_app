@@ -9,103 +9,144 @@ final class ToUserInitial extends AdminState {}
 
 final class ToUserLoading extends AdminState {}
 final class ToUserSuccessfully extends AdminState {
-  final String message;
+  //final String message;
 
-  ToUserSuccessfully(this.message); 
+  ToUserSuccessfully(
+    //this.message
+    ); 
+}
+final class UploadImageSuccessfully extends AdminState{
 }
 final class ToUserFailure extends AdminState {
   final String errMessage;
+  final String arErrMessage;
 
-  ToUserFailure(this.errMessage);
+  ToUserFailure({required this.errMessage, required this.arErrMessage});
 }
 
 final class ToAdminLoading extends AdminState {}
 final class ToAdminSuccessfully extends AdminState {
-  final String message;
+  //final String message;
 
-  ToAdminSuccessfully(this.message); 
+  ToAdminSuccessfully(
+   // this.message
+    ); 
 }
 final class ToAdminFailure extends AdminState {
-  final String errMessage;
+ final String errMessage;
+  final String arErrMessage;
 
-  ToAdminFailure(this.errMessage);
+  ToAdminFailure({required this.errMessage, required this.arErrMessage});
 }
 
 
 final class AdminResponseSuccessfully extends AdminState {
-  final String message;
+  //final String message;
 
-  AdminResponseSuccessfully(this.message); 
+  AdminResponseSuccessfully(
+    //this.message
+    ); 
 }
 final class AdminResponseFailure extends AdminState {
   final String errMessage;
+  final String arErrMessage;
 
-  AdminResponseFailure(this.errMessage);
+  AdminResponseFailure({required this.errMessage, required this.arErrMessage});
 }
 
 final class CreateMarketLoading extends AdminState {}
 final class CreateMarketSuccessfully extends AdminState {
-  final String message;
+  
 
-  CreateMarketSuccessfully(this.message); 
+  CreateMarketSuccessfully(); 
 }
 final class CreateMarketFailure extends AdminState {
   final String errMessage;
+  final String arErrMessage;
 
-  CreateMarketFailure(this.errMessage);
+  CreateMarketFailure({required this.errMessage, required this.arErrMessage});
 }
 final class UpdateMarketLoading extends AdminState {}
 final class UpdateMarketSuccessfully extends AdminState {
-  final String message;
 
-  UpdateMarketSuccessfully(this.message); 
+  UpdateMarketSuccessfully(); 
 }
 final class UpdateMarketFailure extends AdminState {
   final String errMessage;
+  final String arErrMessage;
 
-  UpdateMarketFailure(this.errMessage);
+  UpdateMarketFailure({required this.errMessage, required this.arErrMessage});
 }
 final class DeleteMarketLoading extends AdminState {}
 final class DeleteMarketSuccessfully extends AdminState {
-  final String message;
+  //final String message;
 
-  DeleteMarketSuccessfully(this.message); 
+  DeleteMarketSuccessfully(); 
 }
 final class DeleteMarketFailure extends AdminState {
   final String errMessage;
+  final String arErrMessage;
 
-  DeleteMarketFailure(this.errMessage);
+  DeleteMarketFailure({required this.errMessage, required this.arErrMessage});
 }
+
+
+final class AdminNotificationLoading extends AdminState {}
+final class AdminNotificationSuccessfully extends AdminState {
+  //final String message;
+
+  NotificationResponseModel notificationResponseModel;
+
+  AdminNotificationSuccessfully(this.notificationResponseModel); 
+}
+final class AdminNotificationFailure extends AdminState {
+  final String errMessage;
+  final String arErrMessage;
+
+  AdminNotificationFailure({required this.errMessage, required this.arErrMessage});
+}
+
+
 final class CreateProductLoading extends AdminState {}
 final class CreateProductSuccessfully extends AdminState {
-  final String message;
+ // final String message;
 
-  CreateProductSuccessfully(this.message); 
+  CreateProductSuccessfully(
+   // this.message
+    ); 
 }
 final class CreateProductFailure extends AdminState {
   final String errMessage;
+  final String arErrMessage;
 
-  CreateProductFailure(this.errMessage);
+  CreateProductFailure({required this.errMessage, required this.arErrMessage});
 }
 final class UpdateProductLoading extends AdminState {}
 final class UpdateProductSuccessfully extends AdminState {
-  final String message;
+  //final String message;
 
-  UpdateProductSuccessfully(this.message); 
+  UpdateProductSuccessfully(
+    //this.message
+    ); 
 }
 final class UpdateProductFailure extends AdminState {
   final String errMessage;
+  final String arErrMessage;
 
-  UpdateProductFailure(this.errMessage);
+  UpdateProductFailure({required this.errMessage, required this.arErrMessage});
 }
 final class DeleteProductLoading extends AdminState {}
 final class DeleteProductSuccessfully extends AdminState {
-  final String message;
+  //final String message;
 
-  DeleteProductSuccessfully(this.message); 
+  DeleteProductSuccessfully(
+   // this.message
+    )
+    ; 
 }
 final class DeleteProductFailure extends AdminState {
   final String errMessage;
+  final String arErrMessage;
 
-  DeleteProductFailure(this.errMessage);
+  DeleteProductFailure({required this.errMessage, required this.arErrMessage});
 }

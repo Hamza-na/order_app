@@ -48,7 +48,7 @@ class _SplashScreenState extends State<SplashScreen> {
           opacity: animateText ? 1 : 0,
           duration: const Duration(milliseconds: 1500),
           child: const Text(
-            "App Name",
+            "ITE ORDER",
             style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
           ),
         );

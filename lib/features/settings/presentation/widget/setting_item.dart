@@ -4,6 +4,7 @@ import 'package:order_app/features/settings/presentation/widget/forword_button.d
 
 
 class SettingItem extends StatelessWidget {
+
   final String title;
   final Color bgColor;
   final Color iconColor;
@@ -18,6 +19,7 @@ class SettingItem extends StatelessWidget {
     required this.icon,
     required this.onTap,
     this.value,
+    
   });
 
   @override

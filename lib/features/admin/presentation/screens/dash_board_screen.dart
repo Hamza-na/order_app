@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:order_app/core/di/dependency_injection.dart';
+import 'package:order_app/features/admin/presentation/cubit/admin_cubit.dart';
 import 'package:order_app/features/admin/presentation/screens/change_role.dart';
-import 'package:order_app/features/admin/presentation/screens/products_admin_view.dart';
-import 'package:order_app/features/admin/presentation/screens/shop_screen_admin.dart';
+import 'package:order_app/features/admin/presentation/screens/notification_screen.dart';
+import 'package:order_app/features/products/presentation/widget/products_bloc_builder.dart';
+import 'package:order_app/features/shops/presentation/widget/market_bloc_builder.dart';
 
 class DashboardScreen extends StatefulWidget {
   const DashboardScreen({Key? key}) : super(key: key);
@@ -11,7 +15,6 @@ class DashboardScreen extends StatefulWidget {
 }
 
 class _DashboardScreenState extends State<DashboardScreen> {
-
   bool isExpanded = false;
   int? selectedShop;
   int selectedIndex = 0; // Track selected navigation tab
@@ -51,11 +54,10 @@ class _DashboardScreenState extends State<DashboardScreen> {
             },
           ),
 
-          // Right Content
           Expanded(
             child: Column(
               children: [
-                // App Bar/Menu
+                // AppBar
                 Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Row(
@@ -94,7 +96,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
   /// Returns the header title based on the selected index
   String _getHeaderTitle() {
     if (selectedIndex == 0) {
-      return selectedShop == null ? 'Shops' : 'Products for $selectedShop';
+      return selectedShop == null ? 'Shops' : 'Products for Shop $selectedShop';
     } else if (selectedIndex == 1) {
       return 'Notifications';
     } else if (selectedIndex == 2) {
@@ -108,16 +110,20 @@ class _DashboardScreenState extends State<DashboardScreen> {
     switch (selectedIndex) {
       case 0:
         return selectedShop == null
-            ? const  ShopScreenAdmin()
-            : ProductsAdminView(
-                onBack: () {
+            ? MarketBlocBuilder(
+                isAdmin: true,
+                onShopSelected: (shopId) {
                   setState(() {
-                    selectedShop = null;
+                    selectedShop = shopId;
                   });
                 },
-              );
+              )
+            : ProductsBlocBuilder(isAdmin: true);
       case 1:
-        return const Center(child: Text('Notifications Content'));
+        return BlocProvider(
+          create: (context) => sl<AdminCubit>()..eitherFailureOrAdminNotification(),
+          child: NotificationScreen(),
+        );
       case 2:
         return const ChangeRoleView();
       default:

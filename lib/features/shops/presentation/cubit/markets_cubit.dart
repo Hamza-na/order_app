@@ -8,14 +8,14 @@ import 'package:order_app/features/shops/presentation/cubit/markets_state.dart';
 class MarketsCubit extends Cubit<MarketsState> {
   MarketsCubit() : super(MarketsInitial());
   TextEditingController searchController = TextEditingController();
-  bool isSearching = false;
+  
   eitherFailureOrMarktes() async {
     emit(MarketsLoading());
 
     final failureOrMarktes = await sl<GetMarkets>().call();
 
     failureOrMarktes.fold(
-        (failure) => emit(MarketsFailure(errMessage: failure.errMessage)),
+        (failure) => emit(MarketsFailure(errMessage: failure.errMessage,arErrMessage: failure.arErrMessage)),
         (markets) => emit(MarketsSuccessfuly(marketsModels: markets)));
   }
   eitherFailureOrSearchMarktes(String marketHint) async {
@@ -26,7 +26,7 @@ class MarketsCubit extends Cubit<MarketsState> {
 
     failureOrSearchMarktes.fold(
         (failure) => emit(
-          SearchMarketsFailure(errMessage: failure.errMessage),
+          SearchMarketsFailure(errMessage: failure.errMessage,arErrMessage: failure.arErrMessage),
         ),
         (markets) {
        print("Search success!");

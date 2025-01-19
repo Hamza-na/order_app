@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:order_app/core/constant/colors/colors.dart';
-import 'package:order_app/features/admin/presentation/widgets/products_table.dart';
+import 'package:order_app/features/admin/presentation/screens/products_admin_view.dart';
 import 'package:order_app/features/products/presentation/cubit/get_product_details_cubit.dart';
 import 'package:order_app/features/products/presentation/cubit/get_product_details_state.dart';
 import 'package:order_app/features/products/presentation/widget/product_gird.dart';
@@ -19,10 +19,10 @@ class ProductsBlocBuilder extends StatelessWidget {
           current is GetProductsSuccessfully || current is GetProductsFailure || current is GetProductsLoading,
       builder: (context, state) {
         if(state is GetProductsSuccessfully){
-          return isAdmin?ProductsTable(productsModel: state.productsModel,):ProductGird(products: state.productsModel);
+          return isAdmin?ProductsAdminView(productsModel: state.productsModel,onBack: (){},):ProductGird(products: state.productsModel);
         }
         else if(state is GetProductsFailure){
-          return const Text("error");
+          return Center(child: const Text("error"));
         }
         else if(state is GetProductsLoading){
           return  isAdmin?const Center(

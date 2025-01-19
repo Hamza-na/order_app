@@ -11,24 +11,25 @@ class GetProfileBlocBuilder extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<ProfileCubit, ProfileState>(
       buildWhen: (previous, current) =>
-          current is MeSuccessfully || current is MeFailure || current is MeLoading,
+          current is MeSuccessfully ||
+          current is MeFailure ||
+          current is MeLoading,
       builder: (context, state) {
-        if(state is MeSuccessfully){
-          return ProfileBody(user: state.userModel,);
-        }
-        else if(state is MeFailure){
+        if (state is MeSuccessfully) {
+          return ProfileBody(
+            user: state.userModel,
+          );
+        } else if (state is MeFailure) {
           const Text("error");
-        }
-        else if(state is MeLoading){
+        } else if (state is MeLoading) {
           return const Center(
             child: CircularProgressIndicator(
               color: primaryColor,
             ),
           );
         }
-        return const  SizedBox.shrink();
+        return const SizedBox.shrink();
       },
     );
   }
-  
 }

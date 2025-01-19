@@ -8,9 +8,10 @@ final class CartInitial extends CartState {}
 // add to cart
 final class CartLoading extends CartState {}
 final class CartFailure extends CartState {
-  String errMessage ;
+  final String errMessage;
+  final String arErrMessage;
 
-  CartFailure({required this.errMessage});
+  CartFailure({required this.errMessage, required this.arErrMessage});
 
 }
 final class CartSuccessfuly extends CartState {
@@ -19,17 +20,8 @@ final class CartSuccessfuly extends CartState {
   CartSuccessfuly({required this.cartModel});
 }
 
-// remove form cart
 
-final class RemoveFromCartFailure extends CartState {
-  String errMessage ;
 
-  RemoveFromCartFailure({required this.errMessage});
-}
-final class RemoveFromCartSuccessfuly extends CartState {
-  String message ;
-  RemoveFromCartSuccessfuly({required this.message});
-  }
 
 
 

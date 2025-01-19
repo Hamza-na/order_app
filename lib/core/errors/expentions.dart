@@ -100,18 +100,18 @@ handleDioException(DioException e) {
         case 504: // Bad request
 
           throw BadResponseException(
-              ErrorModel( errorMessage: e.response!.data));
+              ErrorModel.fromJson(e.response!.data));
         case 500:
-          throw InternalServerError(ErrorModel(errorMessage: e.response!.data));
+          throw InternalServerError(ErrorModel.fromJson(e.response!.data));
 
       }
 
     case DioExceptionType.cancel:
       throw CancelException(
-          ErrorModel(errorMessage: e.toString(),));
+          ErrorModel.fromJson(e.response!.data));
 
     case DioExceptionType.unknown:
       throw UnknownException(
-          ErrorModel(errorMessage: e.toString(),));
+         ErrorModel.fromJson(e.response!.data));
   }
 }

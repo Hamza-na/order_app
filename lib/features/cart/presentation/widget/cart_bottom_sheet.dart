@@ -3,6 +3,7 @@ import 'package:order_app/core/constant/colors/colors.dart';
 import 'package:order_app/core/helper/extention.dart';
 import 'package:order_app/core/models/cart_model.dart';
 import 'package:order_app/core/routing/routes.dart';
+import 'package:order_app/generated/l10n.dart';
 
 class CartBottomSheet extends StatelessWidget {
   final CartModel cartModel;
@@ -11,8 +12,8 @@ class CartBottomSheet extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: 220,
+    return cartModel.cartItemModel?.products == null?const SizedBox(): Container(
+      height: 250,
       width: double.infinity,
       decoration: const BoxDecoration(
         color: Colors.white,
@@ -26,38 +27,75 @@ class CartBottomSheet extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Row(
+           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text(
-                'Total Count:',
-                style: TextStyle(
+               Text(
+                S.of(context).price,
+                style: const TextStyle(
                     fontSize: 18,
                     fontWeight: FontWeight.bold,
                     color: Colors.grey),
               ),
               Text(
-                "6",
-                style: TextStyle(
+               "\$${cartModel.cartItemModel!.bill.toString()}" ,
+                style:const  TextStyle(
                   fontSize: 18,
                   fontWeight: FontWeight.bold,
                 ),
               ),
             ],
           ),
-          const Divider(),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              const Text(
-                'Total Price:',
-                style: TextStyle(
+               Text(
+                S.of(context).delivery_cost,
+                style: const TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.grey),
+              ),
+              Text(
+                "\$${cartModel.cartItemModel!.deliveryCost.toString()}",
+                style:const TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ],
+          ),
+           Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+               Text(
+                S.of(context).delivery_time,
+                style:const TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.grey),
+              ),
+              Text(
+                "${cartModel.cartItemModel!.delivareyTime.toString()} min",
+                style:const  TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ],
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+               Text(
+                S.of(context).total_price,
+                style:const  TextStyle(
                   fontSize: 18,
                   fontWeight: FontWeight.bold,
                 ),
               ),
               Text(
-                "\$${cartModel.cartItemModel.bill}",
+                "\$${cartModel.cartItemModel!.totalBill}",
                 style: const TextStyle(
                   fontSize: 18,
                   fontWeight: FontWeight.bold,
@@ -76,9 +114,9 @@ class CartBottomSheet extends StatelessWidget {
                 borderRadius: BorderRadius.circular(30),
               ),
             ),
-            child: const Text(
-              'Checkout',
-              style: TextStyle(
+            child:  Text(
+              S.of(context).check_out,
+              style:const  TextStyle(
                 color: Colors.white,
                 fontSize: 16,
                 fontWeight: FontWeight.bold,

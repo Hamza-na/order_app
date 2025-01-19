@@ -19,7 +19,7 @@ class UpdateProfileBodyModel {
       ApiKey.name: name,
       ApiKey.location: location,
       ApiKey.image: image,
-      ApiKey.method: image,
+      ApiKey.method: method,
     };
   }
 }

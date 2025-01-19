@@ -25,15 +25,19 @@ class DioConsumer extends ApiConsumer {
       error: true,
       compact: true,
       maxWidth: 90,
-   ));
+));
     dio.interceptors.add(
       InterceptorsWrapper(
         onRequest: (options, handler) async {
           if (options.path != EndPoints.login && options.path != EndPoints.signUp && options.path != EndPoints.refreshToken ) {
           String? token = await SharedPrefHelper.getString('accessToken');
+          String? adminToken = await SharedPrefHelper.getString('adminAccessToken');
           print("thisi is token $token");
           if (token != null) {
             options.headers['Authorization'] = 'Bearer $token';
+          }
+          if(options.path == EndPoints.orderDelivared){
+            options.headers['Authorization'] = 'Bearer $adminToken';
           }
         }
           return handler.next(options);
@@ -41,8 +45,8 @@ class DioConsumer extends ApiConsumer {
         onError: (DioException error, handler) async {
 
           print("status code is =  ${error.response?.statusCode}");
-            // if( error.response?.statusCode == 405  )
-            // return await _handleTokenRefresh(error, handler);
+            if( error.response?.statusCode == 405 ||error.response?.statusCode == 401 )
+            return await _handleTokenRefresh(error, handler);
         },
       ),
     );
@@ -104,9 +108,9 @@ class DioConsumer extends ApiConsumer {
 
   //!GET
   @override
-  Future get(String path, {Object? data, Map<String, dynamic>? queryParameters}) async {
+  Future get(String path, {Object? data, Map<String, dynamic>? queryParameters,Options ?options}) async {
     try {
-      var res = await dio.get(path, data: data, queryParameters: queryParameters);
+      var res = await dio.get(path, data: data, queryParameters: queryParameters,options: options);
       return res.data;
     } on DioException catch (e) {
       handleDioException(e);

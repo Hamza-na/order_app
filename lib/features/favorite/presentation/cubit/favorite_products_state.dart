@@ -10,7 +10,8 @@ final class FavoriteSuccessfuly extends FavoriteProductsState {
   FavoriteSuccessfuly({required this.favoriteProductsModel});
 }
 final class FavoriteFailure extends FavoriteProductsState {
-  String errMessage ;
+ final String errMessage;
+  final String arErrMessage;
 
-  FavoriteFailure({required this.errMessage});
+  FavoriteFailure({required this.errMessage, required this.arErrMessage});
 }

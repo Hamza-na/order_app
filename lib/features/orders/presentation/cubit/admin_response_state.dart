@@ -9,6 +9,7 @@ final class AdminResponseSuccessfully extends AdminResponseState {
 }
 final class AdminResponseFailure extends AdminResponseState {
   final String errMessage;
+  final String arErrMessage;
 
-  AdminResponseFailure(this.errMessage);
+  AdminResponseFailure({required this.errMessage, required this.arErrMessage});
 }

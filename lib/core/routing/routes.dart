@@ -15,4 +15,7 @@ class Routes{
   static const String loginAdminScreen = '/loginAdminScreen';
   static const String settingsScreen = '/settingsScreen';
   static const String editProfileScreen = '/editProfileScreen';
+  static const String splashScreen = '/splashScrenn';
+  static const String favoriteScreen = '/favoriteScreen';
+  static const String productAdminScreen = '/productAdminScreen';
 }

@@ -10,8 +10,9 @@ final class OrdersLoading extends OrdersState{}
 
 final class OrdersFailure extends OrdersState{
   final String errMessage;
+  final String arErrMessage;
 
-  OrdersFailure({required this.errMessage});
+  OrdersFailure({required this.errMessage, required this.arErrMessage});
 }
 final class OrdersSuccessfully extends OrdersState{
   final OrdersModel ordersModel;
@@ -21,9 +22,10 @@ final class OrdersSuccessfully extends OrdersState{
 final class RemoveOrdersLoading extends OrdersState{}
 
 final class RemoveOrdersFailure extends OrdersState{
-  final String errMessage;
+ final String errMessage;
+  final String arErrMessage;
 
-  RemoveOrdersFailure({required this.errMessage});
+  RemoveOrdersFailure({required this.errMessage, required this.arErrMessage});
 }
 final class RemoveOrdersSuccessfully extends OrdersState{
   final dynamic message;
@@ -35,8 +37,9 @@ final class RestoreOrdersLoading extends OrdersState{}
 
 final class RestoreOrdersFailure extends OrdersState{
   final String errMessage;
+  final String arErrMessage;
 
-  RestoreOrdersFailure({required this.errMessage});
+  RestoreOrdersFailure({required this.errMessage, required this.arErrMessage});
 }
 final class RestoreOrdersSuccessfully extends OrdersState{
   final dynamic message;
@@ -46,9 +49,10 @@ final class RestoreOrdersSuccessfully extends OrdersState{
 final class OrderConfiramtionLoading extends OrdersState{}
 
 final class OrderConfirmationFailure extends OrdersState{
-  final String errMessage;
+ final String errMessage;
+  final String arErrMessage;
 
-  OrderConfirmationFailure({required this.errMessage});
+  OrderConfirmationFailure({required this.errMessage, required this.arErrMessage});
 }
 final class OrderConfiramtionSuccessfully extends OrdersState{
   final dynamic message;
@@ -59,12 +63,25 @@ final class OrderDelivaredLoading extends OrdersState{}
 
 final class OrderDelivaredFailure extends OrdersState{
   final String errMessage;
+  final String arErrMessage;
 
-  OrderDelivaredFailure({required this.errMessage});
+  OrderDelivaredFailure({required this.errMessage, required this.arErrMessage});
 }
 final class OrderDelivaredSuccessfully extends OrdersState{
   final dynamic message;
   OrderDelivaredSuccessfully({required this.message});
+}
+final class OrderInWayFailure extends OrdersState{
+  final String errMessage;
+  final String arErrMessage;
+
+  OrderInWayFailure({required this.errMessage, required this.arErrMessage});
+}
+final class OrderInWaySuccessfully extends OrdersState{
+  // final dynamic message;
+  OrderInWaySuccessfully(
+    //required this.message
+    );
 }
 
 

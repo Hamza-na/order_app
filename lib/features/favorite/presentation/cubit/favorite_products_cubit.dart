@@ -12,23 +12,10 @@ class FavoriteProductsCubit extends Cubit<FavoriteProductsState> {
     emit(FavoriteLoading());
     final response = await sl<FavoriteProductsRepository>().getFavoriteProducts();
     response.fold(
-      (failure) => emit(FavoriteFailure(errMessage: failure.errMessage)),
+      (failure) => emit(FavoriteFailure(errMessage: failure.errMessage,arErrMessage: failure.arErrMessage)),
       (favoriteProductsModel) => emit(FavoriteSuccessfuly(favoriteProductsModel: favoriteProductsModel)),
     );
   }
 
-  Future<Set<int>> getIdOfFavoriteProducts() async {
-  if (state is FavoriteSuccessfuly) {
-    final favoriteList = (state as FavoriteSuccessfuly).favoriteProductsModel;
 
-    if (favoriteList != null && favoriteList.favoriateProductsModel != null) {
-      Set<int> idFavorite = favoriteList.favoriateProductsModel!
-          .map((product) => product.productId)
-          .toSet();
-
-      return idFavorite;
-    }
-  }
-  return {};
-}
 }

@@ -15,8 +15,8 @@ class SignUpBodyModel extends AuthBodyModel {
     required super.phoneNumber,
     required this.name,
     required this.phoneNumberConfirmation,
-     this.location,
-     this.image,
+    this.location,
+    this.image,
   });
 
   @override

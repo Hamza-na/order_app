@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:order_app/core/constant/colors/colors.dart';
-import 'package:order_app/core/helper/extention.dart';
-import 'package:order_app/features/details_of_product/presentation/cubit/add_to_cart_cubit.dart';
-import 'package:order_app/features/details_of_product/presentation/cubit/add_to_cart_state.dart';
+import 'package:order_app/core/localization/cubit/local_cubit.dart';
+import 'package:order_app/features/details_of_product/presentation/cubit/add_and_remove_from_cart_cubit.dart';
+import 'package:order_app/features/details_of_product/presentation/cubit/add_and_remove_from_cart_state.dart';
 
 class AddToCartBlocListener extends StatelessWidget {
   const AddToCartBlocListener({super.key});
@@ -11,81 +10,52 @@ class AddToCartBlocListener extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocListener<AddToCartCubit, AddToCartState>(
+    return BlocListener<AddAndRemoveFromCartCubit, AddAndRemoveFromCartState>(
       listenWhen: (previous, current) =>
-          current is AddToCartSuccessfully || current is AddToCartFailure || current is AddToCartLoading,
+          current is RemoveFromCartFailure || current is AddToCartFailure ,
       listener: (context, state) {
-        if(state is AddToCartSuccessfully){
-          showSuccessDialog(context) ;
+         if(state is AddToCartFailure){
+          final currentLocale = context.read<LocaleCubit>().state.locale;
+          ScaffoldMessenger.of(context).showSnackBar(
+    SnackBar(
+      content: Text(
+        currentLocale.languageCode =='ar'?state.arErrMessage:state.errMessage, // Error message
+        style: const TextStyle(color: Colors.white),
+      ),
+      backgroundColor: Colors.red,
+      behavior: SnackBarBehavior.floating, // Makes it float above content
+      duration: const Duration(seconds: 3), // Automatically disappears
+      margin: const EdgeInsets.only(
+        bottom: 20.0, // Position it higher
+        left: 16.0,
+        right: 16.0,
+      ),
+    ),
+  ); 
         }
-        else if(state is AddToCartFailure){
-          setupErrorState(context,state.errMessage);
-        }
-        else if(state is AddToCartLoading){
-          showDialog(
-            context: context,
-            builder: (context) => const Center(
-              child: CircularProgressIndicator(color: primaryColor),
-            ),
-          ); 
+        else  if(state is RemoveFromCartFailure){
+          final currentLocale = context.read<LocaleCubit>().state.locale;
+          ScaffoldMessenger.of(context).showSnackBar(
+    SnackBar(
+      content: Text(
+        currentLocale.languageCode =='ar'?state.arErrMessage:state.errMessage, // Error message
+        style: const TextStyle(color: Colors.white),
+      ),
+      backgroundColor: Colors.red,
+      behavior: SnackBarBehavior.floating, // Makes it float above content
+      duration: const Duration(seconds: 3), // Automatically disappears
+      margin: const EdgeInsets.only(
+        bottom: 20.0, // Position it higher
+        left: 16.0,
+        right: 16.0,
+      ),
+    ),
+  ); 
         }
       },
       child: const SizedBox.shrink(),
     );
   }
-  void showSuccessDialog(BuildContext context) {
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: const Text('Add to cart successfully'),
-          content: const SingleChildScrollView(
-            child: ListBody(
-              children: <Widget>[
-                Text('Congratulations, you have Add product successfully!'),
-              ],
-            ),
-          ),
-          actions: <Widget>[
-            TextButton(
-              style: TextButton.styleFrom(
-                foregroundColor: Colors.white,
-                backgroundColor: primaryColor,
-              ),
-              
-              onPressed: () {
-               // context.pushNamed(Routes.loginScreen);
-              },
-              child: const Text('Continue'),
-            ),
-          ],
-        );
-      },
-    );
-  }
 
-   void setupErrorState(BuildContext context, String error) {
-    context.pop();
-    showDialog(
-      context: context,
-      builder: (context) => AlertDialog(
-        icon: const Icon(
-          Icons.error,
-          color: Colors.red,
-          size: 32,
-        ),
-        content: Text(error),
-        actions: [
-          TextButton(
-            onPressed: () {
-              Navigator.pop(context); 
-            },
-            style:const  ButtonStyle(backgroundColor: WidgetStatePropertyAll(primaryColor)),
-            child: const Text('Got it'),
-          ),
-        ],
-      ),
-    );
-  }
-  
+
 }

@@ -1,9 +1,9 @@
-import 'package:image_picker/image_picker.dart';
+import 'package:dio/dio.dart';
 import 'package:order_app/core/databases/api/end_points.dart';
 
 class ProductBodyModel {
   String name;
-  XFile ?image;
+  MultipartFile?image;
   String description ;
   int pirce ;
   int availableQuantity;

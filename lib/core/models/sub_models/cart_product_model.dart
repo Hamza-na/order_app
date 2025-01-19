@@ -3,7 +3,7 @@ import 'package:order_app/core/databases/api/end_points.dart';
 class CartProductModel {
   int productId;
   String name;
-  String? base64Image;
+  String? image;
   String description;
   int marketId;
   int priceForOnePiece;
@@ -13,7 +13,7 @@ class CartProductModel {
   CartProductModel({
     required this.productId,
     required this.name,
-    this.base64Image,
+    this.image,
     required this.description,
     required this.marketId,
     required this.priceForOnePiece,
@@ -29,6 +29,8 @@ class CartProductModel {
         marketId: json[ApiKey.marketId],
         priceForOnePiece: json[ApiKey.priceForOnePiece],
         quantity: json[ApiKey.quantity],
-        totalPrice: json[ApiKey.totalPrice]);
+        totalPrice: json[ApiKey.totalPrice],
+        image: json[ApiKey.image]
+        );
   }
 }

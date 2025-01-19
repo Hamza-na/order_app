@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:liquid_swipe/liquid_swipe.dart';
+import 'package:order_app/core/constant/colors/colors.dart';
+import 'package:order_app/core/helper/extention.dart';
+import 'package:order_app/core/routing/routes.dart';
+import 'package:order_app/features/on_boarding/presentation/on_boarding_model.dart';
 import 'package:order_app/features/on_boarding/presentation/on_boarding_page_widget.dart';
-import 'package:order_app/features/on_boarding/presentation/on_boarding_pages.dart';
-import 'package:smooth_page_indicator/smooth_page_indicator.dart';
+import 'package:order_app/generated/l10n.dart';
+import 'package:smooth_page_indicator/smooth_page_indicator.dart'; // Replace with your target screen import
 
 class OnBoarding extends StatefulWidget {
   const OnBoarding({super.key});
@@ -17,13 +21,41 @@ class _OnBoardingState extends State<OnBoarding> {
 
   @override
   Widget build(BuildContext context) {
-    final pages = onBoardingPages;
+    final onBoardingPages = [
+      OnBoardingPage(
+        model: OnBoardingModel(
+          image: 'assets/images/on_boarding_images/image2.svg',
+          title: S.of(context).on_boarding_title_page_one,
+          subtitle: S.of(context).on_boarding_sub_title_page_one,
+          counterText: '1/3',
+          pageColor: primaryColor,
+        ),
+      ),
+      OnBoardingPage(
+        model: OnBoardingModel(
+          image: 'assets/images/on_boarding_images/image2.svg',
+          title: S.of(context).on_boarding_title_page_two,
+          subtitle: S.of(context).on_boarding_sub_title_page_two,
+          counterText: '2/3',
+          pageColor: secondColor,
+        ),
+      ),
+      OnBoardingPage(
+        model: OnBoardingModel(
+          image: 'assets/images/on_boarding_images/image4.svg',
+          title: S.of(context).on_boarding_title_page_three,
+          subtitle: S.of(context).on_boarding_sub_title_page_three,
+          counterText: '3/3',
+          pageColor: thirdColor,
+        ),
+      )
+    ];
 
     return Scaffold(
       body: Stack(
         alignment: Alignment.center,
         children: [
-          onBoardingLiquidSwipe(pages),
+          onBoardingLiquidSwipe(onBoardingPages),
           Positioned(
             bottom: 60.0,
             child: outLinedButton(),
@@ -41,8 +73,10 @@ class _OnBoardingState extends State<OnBoarding> {
       child: AnimatedSmoothIndicator(
         activeIndex: liquidController.currentPage,
         count: 3,
-        effect:
-            const WormEffect(activeDotColor: Color(0xff272727), dotHeight: 5.0),
+        effect: const WormEffect(
+          activeDotColor: Color(0xff272727),
+          dotHeight: 5.0,
+        ),
       ),
     );
   }
@@ -52,7 +86,7 @@ class _OnBoardingState extends State<OnBoarding> {
       top: 30,
       right: 20,
       child: TextButton(
-        onPressed: () => liquidController.jumpToPage(page: 2),
+        onPressed: () => navigateToNextScreen(),
         child: const Text(
           'Skip',
           style: TextStyle(color: Colors.grey),
@@ -73,16 +107,28 @@ class _OnBoardingState extends State<OnBoarding> {
     );
   }
 
-void onPressed() {
+  void onPressed() {
+    if (currentPage == 2) {
+      // Navigate to the next screen if on the last page
+      navigateToNextScreen();
+    } else {
+      // Otherwise, go to the next page
       int nextPage = liquidController.currentPage + 1;
       liquidController.animateToPage(page: nextPage);
     }
+  }
 
-Container circleInOutLinedButton() {
+  void navigateToNextScreen() {
+    context.pushNamed(Routes.loginScreen);
+  }
+
+  Container circleInOutLinedButton() {
     return Container(
       padding: const EdgeInsets.all(20),
-      decoration:
-          const BoxDecoration(color: Color(0xff272727), shape: BoxShape.circle),
+      decoration: const BoxDecoration(
+        color: Color(0xff272727),
+        shape: BoxShape.circle,
+      ),
       child: const Icon(Icons.arrow_forward_ios),
     );
   }

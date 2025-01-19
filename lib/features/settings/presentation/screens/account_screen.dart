@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:ionicons/ionicons.dart';
 import 'package:order_app/core/constant/colors/colors.dart';
-import 'package:order_app/features/settings/presentation/cubit/profile_cubit.dart';
 import 'package:order_app/features/settings/presentation/widget/get_profile_bloc_builder.dart';
+import 'package:order_app/generated/l10n.dart';
 
 class SettingScreen extends StatelessWidget {
   SettingScreen({super.key});
@@ -11,22 +10,26 @@ class SettingScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: settingAppBar(),
-        body: const GetProfileBlocBuilder());
+        appBar: settingAppBar(context),
+        body:const GetProfileBlocBuilder()
+        );
   }
 
-  AppBar settingAppBar() {
+  AppBar settingAppBar(BuildContext context) {
     return AppBar(
-      title: const Text("Profile"),
+      backgroundColor: primaryColor,
+      title:  Text(S.of(context).profile),
       centerTitle: true,
       leading: IconButton(
         onPressed: () {},
         icon: const Icon(
           Ionicons.chevron_back_outline,
-          color: primaryColor,
+          color: Colors.white,
         ),
       ),
       leadingWidth: 80,
     );
   }
 }
+
+

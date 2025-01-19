@@ -10,8 +10,9 @@ final class LogOutLoading extends LogOutState{}
 
 final class LogOutFailure extends LogOutState{
   final String errMessage;
+  final String arErrMessage;
 
-  LogOutFailure({required this.errMessage});
+  LogOutFailure({required this.errMessage, required this.arErrMessage});
 }
 final class LogOutSuccessfully extends LogOutState{
   final LogOutResponseModel logOutResponseModel;

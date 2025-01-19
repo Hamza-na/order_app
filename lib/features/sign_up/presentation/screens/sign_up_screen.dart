@@ -14,6 +14,7 @@ import 'package:order_app/core/widgets/rounded_input_field.dart';
 import 'package:order_app/features/sign_up/presentation/cubit/sign_up_cubit.dart';
 import 'package:order_app/features/sign_up/presentation/cubit/sign_up_state.dart';
 import 'package:order_app/features/sign_up/presentation/widget/sign_up_bloc_listener.dart';
+import 'package:order_app/generated/l10n.dart';
 
 class SignUpScreen extends StatefulWidget {
   const SignUpScreen({super.key});
@@ -37,7 +38,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 const Upside(
                   imgUrl: "assets/images/login.svg",
                 ),
-                const PageTitleBar(title: 'Create New Account'),
+                PageTitleBar(title: S.of(context).create_new_account),
                 Padding(
                   padding: const EdgeInsets.only(top: 320.0),
                   child: Container(
@@ -58,22 +59,21 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           child: Column(
                             children: [
                               RoundedInputField(
-                                hintText: "Phone :",
-                                //  initialValue: "this is init",
+                                hintText: S.of(context).phone,
                                 icon: Icons.phone,
                                 validator: (value) {
                                   if (value!.length != 10) {
-                                    return "phone must be 10 number";
+                                    return S.of(context).phone_condition_count_number;
                                   }
                                   if (!RegExp(r'^[0-9]+$').hasMatch(value)) {
-                                    return "Input must contain only numbers";
+                                    return S.of(context).phone_condition_number;
                                   }
                                 },
                                 controller:
                                     context.read<SignUpCubit>().phoneController,
                               ),
                               RoundedInputField(
-                                hintText: "PhoneConfiramtion :",
+                                hintText: S.of(context).phone_confiramtion,
                                 icon: Icons.phone,
                                 validator: (value) {
                                   if (value !=
@@ -81,7 +81,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                           .read<SignUpCubit>()
                                           .phoneController
                                           .text) {
-                                    return "phone not match";
+                                    return S.of(context).phone_confirmation_condition;
                                   }
                                 },
                                 controller: context
@@ -89,21 +89,21 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                     .phoneConfirmationController,
                               ),
                               RoundedInputField(
-                                hintText: "Name :",
+                                hintText: S.of(context).name,
                                 icon: Icons.person,
                                 validator: (value) {
                                   if (value == null || value.isEmpty) {
-                                    return "name must me between 3 and 20 char";
+                                    return S.of(context).name_condition;
                                   }
                                   if (value.length < 3 || value.length > 20) {
-                                    return "name must me between 3 and 20 char";
+                                    return S.of(context).name_condition;
                                   }
                                 },
                                 controller:
                                     context.read<SignUpCubit>().nameController,
                               ),
                               RoundedInputField(
-                                hintText: "Location :",
+                                hintText: S.of(context).loacation,
                                 icon: Icons.location_on,
                                 validator: (value) {
                                   if (value == null || value.isEmpty) {
@@ -111,7 +111,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                   }
                                   
                                   if (value.length < 3 || value.length > 200) {
-                                    return "Field must be between 3 and 200 characters";
+                                    return S.of(context).loacation_condition;
                                   }
                                 },
                                 controller: context
@@ -124,9 +124,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                   mainAxisAlignment:
                                       MainAxisAlignment.spaceBetween,
                                   children: [
-                                    const Text(
-                                      "Upload Your Image :",
-                                      style: TextStyle(
+                                     Text(
+                                      S.of(context).upload_your_image,
+                                      style:const  TextStyle(
                                           fontFamily: "OpenSans",
                                           fontSize: 17,
                                           color: Color(0xfff575861)),
@@ -165,15 +165,15 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                 ),
                               ),
                               RoundedButton(
-                                text: 'REGISTER',
+                                text: S.of(context).regisger,
                                 press: () {
                                   validateThenDoSignup(context);
                                 },
                               ),
                               const SizedBox(height: 10),
                               UnderPart(
-                                title: "Already have an account?",
-                                navigatorText: "Login here",
+                                title: S.of(context).already_have_account,
+                                navigatorText: S.of(context).login_here,
                                 onTap: () {
                                   context.pushNamed(Routes.loginScreen);
                                 },

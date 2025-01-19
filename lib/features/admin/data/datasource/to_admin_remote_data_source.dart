@@ -7,7 +7,7 @@ class ToAdminRemoteDataSource {
   ToAdminRemoteDataSource({required this.api});
 
   Future<dynamic>toAdmin(int userId)async{
-    final response =await api.post("${EndPoints.toAdmin}/$userId");
+    final response =await api.get("${EndPoints.toAdmin}/$userId");
     return response;
   }
 

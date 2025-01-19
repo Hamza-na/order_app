@@ -11,9 +11,9 @@ class CreateProductRemoteDataSource {
     required this.api,
   });
 
-  Future<CreateProductModel>createProduct({required  ProductBodyModel productBodyModel,required int marketId})async{
-    final response = await api.post('${EndPoints.products}/$marketId',data: productBodyModel,isFormData:  true);
-    return CreateProductModel.fromJson(response);
+  Future<dynamic>createProduct({required  ProductBodyModel productBodyModel,required int marketId})async{
+    final response = await api.post('${EndPoints.products}/$marketId',data: productBodyModel.toJson(),isFormData: true);
+    return response;
   }
 
 }

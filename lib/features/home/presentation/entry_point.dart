@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:order_app/core/constant/colors/colors.dart';
-import 'package:order_app/features/cart/presentation/screens/cart_screen.dart';
+import 'package:order_app/core/helper/extention.dart';
+import 'package:order_app/core/routing/routes.dart';
 import 'package:order_app/features/home/presentation/widget/menu_btn.dart';
 import 'package:order_app/features/home/presentation/widget/side_menu.dart';
-import 'package:order_app/features/settings/presentation/screens/account_screen.dart';
+import 'package:order_app/features/shops/presentation/cubit/markets_cubit.dart';
 import 'package:order_app/features/shops/presentation/screens/shope_screen%20.dart';
+import 'package:order_app/generated/l10n.dart';
 
 class EntryPoint extends StatefulWidget {
   const EntryPoint({super.key});
@@ -16,22 +19,23 @@ class EntryPoint extends StatefulWidget {
 
 class _EntryPointState extends State<EntryPoint>
     with SingleTickerProviderStateMixin {
-      
-  int _selectedIndex = 0;
+  //int _selectedIndex = 0;
   bool isSideMenuClosed = true;
   late AnimationController _animationController;
   late Animation<double> animation;
   late Animation<double> scaleAnimation;
 
-  final List<Widget> _pages = [
-    const ShopsScreen(),
-    const Center(child: Text("Likes Screen")),
-    const CartScreen(),
-    SettingScreen(),
-  ];
+  // final List<Widget> _pages = [
+  //   SettingScreen(),
+  //   const ShopsScreen(),
+  //   const Center(child: Text("Likes Screen")),
+  //   const CartScreen(),
+    
+  // ];
 
   @override
   void initState() {
+    context.read<MarketsCubit>().eitherFailureOrMarktes();
     super.initState();
     _animationController = AnimationController(
       vsync: this,
@@ -86,14 +90,11 @@ class _EntryPointState extends State<EntryPoint>
             isRTL ? -(animation.value * 265) : (animation.value * 265), 0),
         child: Transform.scale(
           scale: scaleAnimation.value,
-          child: ClipRRect(
-            borderRadius: const BorderRadius.all(Radius.circular(24)),
+          child:  const ClipRRect(
+            borderRadius:  BorderRadius.all(Radius.circular(24)),
             child: Padding(
-              padding: const EdgeInsets.only(bottom: 80.0),
-              child: IndexedStack(
-                index: _selectedIndex,
-                children: _pages,
-              ),
+              padding:  EdgeInsets.only(bottom: 80.0),
+              child:ShopsScreen()
             ),
           ),
         ),
@@ -158,37 +159,40 @@ class _EntryPointState extends State<EntryPoint>
             tabs: [
               GButton(
                 icon: Icons.home,
-                text: 'Home',
+                text:  S.of(context).home,
                 onPressed: () {
                   setState(() {
-                    _selectedIndex = 0;
+                    // _selectedIndex = 0;
                   });
                 },
               ),
               GButton(
                 icon: Icons.favorite_border,
-                text: 'Likes',
+                text:  S.of(context).likes,
                 onPressed: () {
                   setState(() {
-                    _selectedIndex = 1;
+                    // _selectedIndex = 1;
+                    context.pushNamed(Routes.favoriteScreen);
                   });
                 },
               ),
               GButton(
                 icon: Icons.shopping_cart,
-                text: 'Cart',
+                text:  S.of(context).cart,
                 onPressed: () {
                   setState(() {
-                    _selectedIndex = 2;
+                    // _selectedIndex = 2;
+                    context.pushNamed(Routes.order);
                   });
                 },
               ),
               GButton(
                 icon: Icons.settings,
-                text: 'Settings',
+                text:  S.of(context).settings,
                 onPressed: () {
                   setState(() {
-                    _selectedIndex = 3;
+                    // _selectedIndex = 3;
+                    context.pushNamed(Routes.settingsScreen);
                   });
                 },
               ),

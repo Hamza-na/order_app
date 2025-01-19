@@ -20,7 +20,7 @@ class OnBoardingPage extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         
         children: [
-            SvgPicture.asset(model.image,height: size.height * 0.5),
+            SvgPicture.asset(model.image,height: size.height * 0.5,width: size.width * 0.7,),
             Column(
               children: [
                 Text(model.title,style: Theme.of(context).textTheme.headlineMedium,),

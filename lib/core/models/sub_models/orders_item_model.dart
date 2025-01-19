@@ -7,7 +7,7 @@ class OrdersItemModel {
   CartModel cartModel;
   String location;
   String status;
-  String rejectedAt;
+  String ?rejectedAt;
   String createdAt;
   String updatedAt;
 
@@ -16,14 +16,14 @@ class OrdersItemModel {
       required this.createdAt,
       required this.id,
       required this.location,
-      required this.rejectedAt,
+      this.rejectedAt,
       required this.status,
       required this.updatedAt,
       required this.userId});
 
   factory OrdersItemModel.fromJson(Map<String, dynamic> json) {
     return OrdersItemModel(
-        cartModel: CartModel.fromJson(json[ApiKey.cart]),
+        cartModel: CartModel.fromJson(json),
         createdAt: json[ApiKey.createdAt],
         id: json[ApiKey.id],
         location: json[ApiKey.location],

@@ -10,7 +10,7 @@ class AdminResponseCubit extends Cubit<AdminResponseState> {
     final result = await sl<AdminResponseRepository>()
         .adminResponse(orderId: orderId, answer: answer);
     result.fold((failure) {
-      emit(AdminResponseFailure(failure.errMessage));
+      emit(AdminResponseFailure(errMessage: failure.errMessage,arErrMessage: failure.arErrMessage));
     }, (message) {
       emit(AdminResponseSuccessfully(message));
     });

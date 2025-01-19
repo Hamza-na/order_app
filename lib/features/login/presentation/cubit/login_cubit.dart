@@ -25,22 +25,19 @@ final failureOrLogin = await sl<Login>().call(
 failureOrLogin.fold(
   (failure) {
   //  print("LoginFailure emitted: ${failure.errMessage}");
-    emit(LoginFailure(errMessage: failure.errMessage));
+    emit(LoginFailure(errMessage: failure.errMessage,arErrMessage: failure.arErrMessage));
   },
   (user)async {
     //print("LoginSuccessfully emitted");
-    await saveUserToken(user.accessTokenEntitiy.token,user.refreshTokenEntitiy.token,user.accessTokenEntitiy.expiresIn);
+    await saveUserToken(user.accessTokenEntitiy.token,user.refreshTokenEntitiy.token);
     emit(LoginSuccessfully(loginResponseEntitiy: user));
   },
 );
 
   }
-   Future<void> saveUserToken(String accessToken ,String refreshToken,String expiresIn) async {
+  Future<void> saveUserToken(String accessToken ,String refreshToken) async {
     await SharedPrefHelper.setData("accessToken", accessToken);
     await SharedPrefHelper.setData("refreshToken", refreshToken);
-    DateTime afterExpiresIn = DateTime.parse(expiresIn);
-    afterExpiresIn.add( const Duration(minutes: 59));
-    await SharedPrefHelper.setData("expiresIn", afterExpiresIn.toString());
     
   }
 }

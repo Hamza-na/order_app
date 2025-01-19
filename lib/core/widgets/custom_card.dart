@@ -31,7 +31,7 @@ class CustomCard extends StatelessWidget {
           children: [
             ClipRRect(
               borderRadius: BorderRadius.circular(12),
-              child: Image.asset(
+              child: Image.network(
                 imageUrl ?? "assets/images/shop3.jpg",
                 width: 80,
                 height: 80,

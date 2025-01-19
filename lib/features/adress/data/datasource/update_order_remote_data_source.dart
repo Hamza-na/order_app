@@ -7,8 +7,14 @@ class UpdateOrderRemoteDataSource {
 
   UpdateOrderRemoteDataSource({required this.api});
 
-  Future<OrderCartModel> updateOrder({required int orderId}) async {
-    final response = await api.post("${EndPoints.orderCart}/$orderId");
+  Future<OrderCartModel> updateOrder({required int orderId,required String location}) async {
+    print(location);
+    print("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+    print(orderId);
+    final response = await api.post("${EndPoints.orderUpdated}/$orderId",data: {
+      ApiKey.method:"put",
+      ApiKey.location:location
+    });
     return OrderCartModel.fromJson(response);
   }
 }

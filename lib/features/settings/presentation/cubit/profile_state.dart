@@ -14,8 +14,9 @@ final class UpdateProfileSuccessfully extends ProfileState {
 }
 final class UpdateProfileFailure extends ProfileState {
   final String errMessage;
+  final String arErrMessage;
 
-  UpdateProfileFailure(this.errMessage);
+  UpdateProfileFailure({required this.errMessage, required this.arErrMessage});
 }
 final class MeLoading extends ProfileState {}
 final class MeSuccessfully extends ProfileState {
@@ -25,6 +26,7 @@ final class MeSuccessfully extends ProfileState {
 }
 final class MeFailure extends ProfileState {
   final String errMessage;
+  final String arErrMessage;
 
-  MeFailure(this.errMessage);
+  MeFailure({required this.errMessage, required this.arErrMessage});
 }

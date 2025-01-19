@@ -1,9 +1,9 @@
 class EndPoints {
-  static const String baserUrl = "http://192.168.153.73:8000/api";
+  static const String baserUrl = "http://192.168.74.73:8000/api";
   static const String signUp = "/auth/register";
   static const String login = "/auth/login";
   static const String user = "users/";
-  static const String logOut = "/auth/logOut";
+  static const String logOut = "/auth/logout";
   static const String markets = "/markets";
   static const String products = "/products";
   static const String addToCart= "/cart/add_to_cart";
@@ -27,6 +27,9 @@ class EndPoints {
   static const String orderConfirmation = "/orders/period_of_editing_has_finished"; 
   static const String adminResponse = "/orders/admin_response"; 
   static const String me = "/auth/me"; 
+  static const String adminNotification = "/orders/index_notifications"; 
+  static const String orderInWay = "/orders/index_in_way_orders"; 
+
 }
 
 class ApiKey {
@@ -40,6 +43,11 @@ class ApiKey {
   static String favoriteProducts = "favorite_products";
   static String fcmToken = "fcm_tokens";
   static String language = "lang";
+  static String orderId = "order_id";
+  static String updated = "updated";
+  static String notification = "notifications";
+  static String quantityInCart = "quantity_in_cart";
+  static String countInCart = "count_in_cart";
 
 
   static String message = "message";
@@ -85,6 +93,10 @@ class ApiKey {
 
   static String order = "order";
   static String newAccessToken= "new_access_token";
+
+  static String deliveryCost= "delivery_cost";
+  static String totalBill =  "total_bill";
+  static String delivareyTime= "delivery_time";
 
 
 

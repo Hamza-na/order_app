@@ -9,7 +9,7 @@ class OrderDelivaredRemoteDataSource {
   });
 
   Future<dynamic>delivaryOrder(int id)async{
-    return await api.delete('${EndPoints.orderDelivared}/$id');
+    return await api.get('${EndPoints.orderDelivared}/$id',);
   }
 
   

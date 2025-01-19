@@ -1,6 +1,6 @@
 
 
-import 'package:order_app/features/details_of_product/data/models/get_product_details_model.dart';
+import 'package:order_app/core/models/sub_models/product_model_of_resturant_with_image.dart';
 
 class GetProductDetailsState {}
 
@@ -15,7 +15,7 @@ final class GetProductDetailsFailure extends GetProductDetailsState{
   GetProductDetailsFailure({required this.errMessage});
 }
 final class GetProductDetailsSuccessfully extends GetProductDetailsState{
-  final GetProductDetailsModel getProductDetailsModel;
+  final ProductModelOfResturantWithImage getProductDetailsModel;
 
   GetProductDetailsSuccessfully({required this.getProductDetailsModel});
 }

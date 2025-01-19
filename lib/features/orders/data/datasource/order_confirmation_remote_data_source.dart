@@ -9,7 +9,7 @@ class OrderConfirmationRemoteDataSource {
   });
 
   Future<dynamic>orderConfirmation({required int orderId})async{
-    return await api.get('${EndPoints.orderDelivared}/$orderId');
+    return await api.get('${EndPoints.orderConfirmation}/$orderId');
   }
 
   

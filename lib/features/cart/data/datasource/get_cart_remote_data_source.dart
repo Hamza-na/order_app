@@ -11,6 +11,7 @@ class GetCartRemoteDataSource {
 
   Future<CartModel>getCart()async{
     final response =await api.get(EndPoints.getCart);
+    print(response);
     
     return CartModel.fromJson(response);
   }

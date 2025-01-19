@@ -3,13 +3,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:order_app/core/helper/extention.dart';
 import 'package:order_app/core/models/products_model.dart';
-import 'package:order_app/core/models/sub_models/product_model_of_resturant.dart';
+import 'package:order_app/core/models/sub_models/product_model_of_resturant_with_image.dart';
 import 'package:order_app/core/routing/routes.dart';
-import 'package:order_app/features/favorite/presentation/cubit/favorite_products_cubit.dart';
 import 'package:order_app/features/products/presentation/cubit/get_product_details_cubit.dart';
 import 'package:order_app/features/products/presentation/cubit/get_product_details_state.dart';
-import 'package:order_app/features/products/presentation/widget/add_to_favorite_bloc_listener.dart';
-import 'package:order_app/features/products/presentation/widget/remove_from_favorite_bloc_listener.dart';
 
 class ProductGird extends StatelessWidget {
    ProductGird({super.key,this.products});
@@ -24,19 +21,19 @@ class ProductGird extends StatelessWidget {
       gridDelegate: const SliverSimpleGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2),
       mainAxisSpacing: 20,
       crossAxisSpacing: 20,
-      itemCount: products?.marketModel.listOfProduct.listOfProduct.length,
+      itemCount: products?.listOfProduct?.listOfProduct.length,
       itemBuilder: (context, index) {
-        final item = products!.marketModel.listOfProduct.listOfProduct[index];
+        final item = products!.listOfProduct!.listOfProduct[index];
         return GestureDetector(
           onTap: () {
-            context.pushNamed(Routes.productDetails,arguments: item.id);
+            context.pushNamed(Routes.productDetails,arguments: item.productModelOfResturant.id);
           },
           child: _buildProductCard(item,context),
         );
       },
     );
   }
-    Widget _buildProductCard(ProductModelOfResturant ?product,BuildContext context) {
+    Widget _buildProductCard(ProductModelOfResturantWithImage ?product,BuildContext context) {
     return Container(
       decoration: BoxDecoration(
         color: Colors.white,
@@ -47,21 +44,17 @@ class ProductGird extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Center(
-            child: Image.asset(
-              "assets/images/shop3.jpg",
-              height: 100,
-              fit: BoxFit.cover,
-            ),
+            child: imageOfProduct(product),
           ),
           const SizedBox(height: 10),
           Text(
-            product!.name,
+            product!.productModelOfResturant.name,
             style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
           ),
           Text(
-            products!.marketModel.name,
+           "${product.productModelOfResturant.price}\$",
             style: const TextStyle(fontSize: 14, color: Colors.grey),
           ),
           const SizedBox(height: 5),
@@ -77,39 +70,54 @@ class ProductGird extends StatelessWidget {
               ),
               BlocBuilder<GetProductsCubit, GetProductsState>(
                 builder: (context, state) {
-                  final isFavorite = context.read<FavoriteProductsCubit>().getIdOfFavoriteProducts;
+                  final isFavorite =
+                      context.read<GetProductsCubit>().isFavorite(
+                            product.productModelOfResturant.id,
+                          );
                   return IconButton(
-                    icon:Icon(
-                      Icons.abc
-                    ) ,
-                    onPressed: () {},
-                    // icon: Icon(
-                    //   isFavorite ? Icons.favorite : Icons.favorite_outline,
-                    //   color: isFavorite ? Colors.red : Colors.grey,
-                    // ),
-                    // onPressed: () {
-                    //   isFavorite
-                    //       ? removeFromFavorite(context, product.id)
-                    //       : addToFavorite(context, product.id);
-                    // },
-                );
-                })
+                    icon: Icon(
+                      isFavorite ? Icons.favorite : Icons.favorite_outline,
+                      color: isFavorite ? Colors.red : Colors.grey,
+                    ),
+                    onPressed: () {
+                      isFavorite
+                          ? context
+                              .read<GetProductsCubit>()
+                              .eitherFailureOrRemoveFromFavorite(
+                                product.productModelOfResturant.id,
+                              )
+                          : context
+                              .read<GetProductsCubit>()
+                              .eitherFailureOrAddToFavorite(
+                                product.productModelOfResturant.id,
+                              );
+                    },
+              );})
+        ])
             ],
-          ),
-        ],
-      ),
-    );
+          )
+      );
   }
+
+    Image imageOfProduct(ProductModelOfResturantWithImage ?product) {
+
+      if(product?.image == null ){
+      return Image.asset("assets/images/shop3.jpg",fit: BoxFit.cover,height: 100,width: 100,);
+     }
+      return Image.network
+      (
+      "${product!.image}", fit: BoxFit.cover, height: 100,width: 100,
+      );
+
+    }
+
 }
 addToFavorite(BuildContext context,int productId){
    context.read<GetProductsCubit>().eitherFailureOrAddToFavorite(productId);
-  AddToFavoriteBlocListener(productId:productId,);
- 
 }
 
 removeFromFavorite(BuildContext context ,int productId){
   context.read<GetProductsCubit>().eitherFailureOrRemoveFromFavorite(productId);
-  RemoveFromFavoriteBlocListener(productId: productId);
   
 }
 

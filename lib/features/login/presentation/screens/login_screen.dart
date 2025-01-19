@@ -9,6 +9,7 @@ import 'package:order_app/core/widgets/upside.dart';
 import 'package:order_app/core/widgets/rounded_button.dart';
 import 'package:order_app/features/login/presentation/cubit/login_cubit.dart';
 import 'package:order_app/features/login/presentation/widget/login_bloc_listener.dart';
+import 'package:order_app/generated/l10n.dart';
 
 class LoginScreen extends StatelessWidget {
   const LoginScreen({super.key});
@@ -27,7 +28,7 @@ class LoginScreen extends StatelessWidget {
                 const Upside(
                   imgUrl: "assets/images/login.svg",
                 ),
-                const PageTitleBar(title: 'Login to your account'),
+                 PageTitleBar(title: S.of(context).title_login_screen),
                 Padding(
                   padding: const EdgeInsets.only(top: 320.0),
                   child: Container(
@@ -50,14 +51,14 @@ class LoginScreen extends StatelessWidget {
                           child: Column(
                             children: [
                               RoundedInputField(
-                                hintText: "Phone",
+                                hintText: S.of(context).phone,
                                 icon: Icons.phone,
                                 validator: (value) {
                                   if (value!.length != 10) {
-                                    return "phone must be 10 number";
+                                    return S.of(context).phone_condition_count_number;
                                   }
                                   if (!RegExp(r'^[0-9]+$').hasMatch(value)) {
-                                    return "Input must contain only numbers";
+                                    return S.of(context).phone_condition_number;
                                   }
                                 },
                                 controller:
@@ -65,7 +66,7 @@ class LoginScreen extends StatelessWidget {
                               ),
 
 
-                              RoundedButton(text: 'LOGIN', press: () {
+                              RoundedButton(text: S.of(context).login, press: () {
                                 validateThenDoLogin(context);
                               }),
                               const SizedBox(
@@ -74,7 +75,7 @@ class LoginScreen extends StatelessWidget {
 
 
                               UnderPart(
-                                title: "Don't have an account?",
+                                title: S.of(context).dont_have_account,
                                 navigatorText: "Register here",
                                 onTap: () {
                                   context.pushNamed(Routes.signUpScreen);

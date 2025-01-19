@@ -1,6 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
 import 'package:order_app/core/databases/api/dio_consumer.dart';
+import 'package:order_app/features/admin/data/datasource/admin_notification_remote_data_source.dart';
 import 'package:order_app/features/admin/data/datasource/admin_response_remote_data_source.dart';
 import 'package:order_app/features/admin/data/datasource/create_market_remote_data_source.dart';
 import 'package:order_app/features/admin/data/datasource/create_product_remote_data_source.dart';
@@ -10,6 +11,7 @@ import 'package:order_app/features/admin/data/datasource/to_admin_remote_data_so
 import 'package:order_app/features/admin/data/datasource/to_user_remote_data_source.dart';
 import 'package:order_app/features/admin/data/datasource/update_market_remote_data_source.dart';
 import 'package:order_app/features/admin/data/datasource/update_product_remote_data_source.dart';
+import 'package:order_app/features/admin/data/repositories/admin_notification_repository.dart';
 import 'package:order_app/features/admin/data/repositories/admin_response_repository.dart';
 import 'package:order_app/features/admin/data/repositories/create_market_repository.dart';
 import 'package:order_app/features/admin/data/repositories/create_product_repository.dart';
@@ -19,20 +21,33 @@ import 'package:order_app/features/admin/data/repositories/to_admin_repository.d
 import 'package:order_app/features/admin/data/repositories/to_user_repository.dart';
 import 'package:order_app/features/admin/data/repositories/update_market_repository.dart';
 import 'package:order_app/features/admin/data/repositories/update_product_repository.dart';
+import 'package:order_app/features/admin/presentation/cubit/admin_cubit.dart';
 import 'package:order_app/features/adress/data/datasource/update_order_remote_data_source.dart';
 import 'package:order_app/features/adress/data/repositories/update_order_repository.dart';
 import 'package:order_app/features/cart/data/datasource/get_cart_remote_data_source.dart';
 import 'package:order_app/features/adress/data/datasource/order_cart_remote_data_source.dart';
-import 'package:order_app/features/cart/data/datasource/remove_product_from_cart_remote_data_source.dart';
+import 'package:order_app/features/details_of_product/data/datasource/remove_product_from_cart_remote_data_source.dart';
 import 'package:order_app/features/cart/data/repositories/get_cart_repository.dart';
 import 'package:order_app/features/adress/data/repositories/order_cart_repository.dart';
-import 'package:order_app/features/cart/data/repositories/remove_product_from_cart_repository_repository.dart';
+import 'package:order_app/features/details_of_product/data/repositories/remove_product_from_cart_repository.dart';
+import 'package:order_app/features/cart/presentation/cubit/cart_cubit.dart';
 import 'package:order_app/features/details_of_product/data/datasource/add_to_cart_remote_data_source.dart';
 import 'package:order_app/features/details_of_product/data/datasource/get_product_details_remote_data_source.dart';
 import 'package:order_app/features/details_of_product/data/repositories/add_to_cart_repository.dart';
 import 'package:order_app/features/details_of_product/data/repositories/get_product_details_repository.dart';
+import 'package:order_app/features/details_of_product/presentation/cubit/add_and_remove_from_cart_cubit.dart';
+import 'package:order_app/features/details_of_product/presentation/cubit/get_product_details_cubit.dart';
 import 'package:order_app/features/favorite/data/datasource/favorite_remote_data_source.dart';
 import 'package:order_app/features/favorite/data/repositories/favorite_products_repository.dart';
+import 'package:order_app/features/favorite/presentation/cubit/favorite_products_cubit.dart';
+import 'package:order_app/features/orders/data/datasource/order_confirmation_remote_data_source.dart';
+import 'package:order_app/features/orders/data/datasource/order_delivared_remote_data_source.dart';
+import 'package:order_app/features/orders/data/datasource/order_in_way_remote_data_source.dart';
+import 'package:order_app/features/orders/data/datasource/restore_order_remote_data_source.dart';
+import 'package:order_app/features/orders/data/repositoies/order_confirmation_repository.dart';
+import 'package:order_app/features/orders/data/repositoies/order_delivared_repository.dart';
+import 'package:order_app/features/orders/data/repositoies/order_in_way_repository.dart';
+import 'package:order_app/features/orders/data/repositoies/restore_order_repository.dart';
 import 'package:order_app/features/orders/presentation/cubit/orders_cubit.dart';
 import 'package:order_app/features/products/data/datasource/add_to_favorite_remote_data_source.dart';
 import 'package:order_app/features/products/data/datasource/get_products_market_remote_data_source.dart';
@@ -40,6 +55,7 @@ import 'package:order_app/features/products/data/datasource/remove_from_favorite
 import 'package:order_app/features/products/data/repositories/add_to_favorite_repository.dart';
 import 'package:order_app/features/products/data/repositories/get_products_markets_repository.dart';
 import 'package:order_app/features/products/data/repositories/remove_from_favorite_repository.dart';
+import 'package:order_app/features/products/presentation/cubit/get_product_details_cubit.dart';
 import 'package:order_app/features/settings/data/datasource/me_remote_data_source.dart';
 import 'package:order_app/features/settings/data/datasource/update_profile_remote_data_source.dart';
 import 'package:order_app/features/settings/data/repositories/me_repository.dart';
@@ -58,6 +74,7 @@ import 'package:order_app/features/orders/data/datasource/get_orders_remote_data
 import 'package:order_app/features/orders/data/datasource/remove_order_remote_data_source.dart';
 import 'package:order_app/features/orders/data/repositoies/get_orders_repository.dart';
 import 'package:order_app/features/orders/data/repositoies/remove_order_repository.dart';
+import 'package:order_app/features/shops/presentation/cubit/markets_cubit.dart';
 import 'package:order_app/features/sign_up/data/datasources/sign_up_remote_data_source.dart';
 import 'package:order_app/features/sign_up/data/repositories/sign_up_repository_impl.dart';
 import 'package:order_app/features/sign_up/domain/usecases/sign_up.dart';
@@ -145,6 +162,7 @@ Future<void> init() async {
       AddToFavoriteRepository(
           addToFavoriteRemoteDataSource:
               sl<AddToFavoriteRemoteDataSource>()));
+  
 
   // remove from favorite
   sl.registerLazySingleton<RemoveFromFavoriteRemoteDataSource>(
@@ -180,8 +198,8 @@ Future<void> init() async {
   sl.registerLazySingleton<RemoveProductFromCartRemoteDataSource>(
       () => RemoveProductFromCartRemoteDataSource(api: sl<DioConsumer>()));
 
-  sl.registerLazySingleton<RemoveProductFromCartRepositoryRepository>(() =>
-      RemoveProductFromCartRepositoryRepository(
+  sl.registerLazySingleton<RemoveProductFromCartRepository>(() =>
+      RemoveProductFromCartRepository(
           removeProductFromCartRemoteDataSource:
               sl<RemoveProductFromCartRemoteDataSource>()));
 
@@ -198,6 +216,13 @@ Future<void> init() async {
 
   sl.registerLazySingleton<RemoveOrderRepository>(() => RemoveOrderRepository(
       removeOrderRemoteDataSource: sl<RemoveOrderRemoteDataSource>()));
+
+  sl.registerLazySingleton<RestoreOrderRemoteDataSource>(
+      () => RestoreOrderRemoteDataSource(api: sl<DioConsumer>()));
+
+  sl.registerLazySingleton<RestoreOrderRepository>(() => RestoreOrderRepository(
+      restoreOrderRemoteDataSource: sl<RestoreOrderRemoteDataSource>()));
+      
 
   // update profile
   sl.registerLazySingleton<UpdateProfileRemoteDataSource>(
@@ -216,6 +241,11 @@ Future<void> init() async {
           favoriteRemoteDataSource: sl<FavoriteRemoteDataSource>()));
 
   sl.registerFactory<OrdersCubit>(() => OrdersCubit());
+  sl.registerFactory<FavoriteProductsCubit>(() => FavoriteProductsCubit());
+  sl.registerFactory<AddAndRemoveFromCartCubit>(() => AddAndRemoveFromCartCubit(cartCubit: CartCubit()));
+  sl.registerFactory<AdminCubit>(() => AdminCubit(MarketsCubit()));
+  sl.registerFactory<GetProductsCubit>(() => GetProductsCubit(FavoriteProductsCubit()));
+  sl.registerFactory<GetProductDetailsCubit>(() => GetProductDetailsCubit());
 
   // to user
   sl.registerLazySingleton<ToUserRemoteDataSource>(
@@ -232,6 +262,7 @@ Future<void> init() async {
       toAdminRemoteDataSource: sl<ToAdminRemoteDataSource>()));
 
    // create market 
+
   sl.registerLazySingleton<CreateMarketRemoteDataSource>(
       () => CreateMarketRemoteDataSource(api: sl<DioConsumer>()));
 
@@ -293,6 +324,12 @@ Future<void> init() async {
   sl.registerLazySingleton<MeRepository>(() => MeRepository(
       meRemoteDataSource: sl<MeRemoteDataSource>()));
 
+  sl.registerLazySingleton<OrderInWayRemoteDataSource>(
+      () => OrderInWayRemoteDataSource(api: sl<DioConsumer>()));
+
+  sl.registerLazySingleton<OrderInWayRepository>(() => OrderInWayRepository(
+      orderInWayRemoteDataSource: sl<OrderInWayRemoteDataSource>()));
+
 
 
 
@@ -306,4 +343,23 @@ Future<void> init() async {
 
   sl.registerLazySingleton<UpdateOrderRepository>(() => UpdateOrderRepository(
       updateOrderRemoteDataSource: sl<UpdateOrderRemoteDataSource>()));
+
+  sl.registerLazySingleton<OrderConfirmationRemoteDataSource>(
+      () => OrderConfirmationRemoteDataSource(api: sl<DioConsumer>()));
+
+  sl.registerLazySingleton<OrderConfirmationRepository>(() => OrderConfirmationRepository(
+      orderConfirmationRemoteDataSource: sl<OrderConfirmationRemoteDataSource>()));
+
+  sl.registerLazySingleton<OrderDelivaredRemoteDataSource>(
+      () => OrderDelivaredRemoteDataSource(api: sl<DioConsumer>()));
+
+  sl.registerLazySingleton<OrderDelivaredRepository>(() => OrderDelivaredRepository(
+      orderDelivaredRemoteDataSource: sl<OrderDelivaredRemoteDataSource>()));
+
+
+  sl.registerLazySingleton<AdminNotificationRemoteDataSource>(
+      () => AdminNotificationRemoteDataSource(api: sl<DioConsumer>()));
+
+  sl.registerLazySingleton<AdminNotificationRepository>(() => AdminNotificationRepository(
+      adminNotificationRemoteDataSource: sl<AdminNotificationRemoteDataSource>()));
 }

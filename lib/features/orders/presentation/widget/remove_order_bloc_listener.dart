@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:order_app/core/constant/colors/colors.dart';
 import 'package:order_app/core/helper/extention.dart';
+import 'package:order_app/core/localization/cubit/local_cubit.dart';
 import 'package:order_app/core/routing/routes.dart';
 import 'package:order_app/features/orders/presentation/cubit/orders_cubit.dart';
 import 'package:order_app/features/orders/presentation/cubit/orders_state.dart';
@@ -19,7 +20,8 @@ class RemoveOrderBlocListener extends StatelessWidget {
       },
       listener: (context, state) {
         if (state is RemoveOrdersFailure) {
-          setupErrorState(context, state.errMessage);
+          final currentLocale = context.read<LocaleCubit>().state.locale;
+          setupErrorState(context,currentLocale.languageCode =='ar'?state.arErrMessage:state.errMessage);
         } else if (state is RemoveOrdersSuccessfully) {
           context.pop();
           removeOrderSuccessfully(context);

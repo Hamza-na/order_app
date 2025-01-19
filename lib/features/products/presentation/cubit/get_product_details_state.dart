@@ -8,8 +8,9 @@ final class GetProductsLoading extends GetProductsState{}
 
 final class GetProductsFailure extends GetProductsState{
   final String errMessage;
+  final String arErrMessage;
 
-  GetProductsFailure({required this.errMessage});
+  GetProductsFailure({required this.errMessage, required this.arErrMessage});
 }
 final class GetProductsSuccessfully extends GetProductsState{
   final ProductsModel productsModel;
@@ -18,20 +19,24 @@ final class GetProductsSuccessfully extends GetProductsState{
 }
 final class AddToFavoriteFailure extends GetProductsState{
   final String errMessage;
+  final String arErrMessage;
 
-  AddToFavoriteFailure({required this.errMessage});
+  AddToFavoriteFailure({required this.errMessage, required this.arErrMessage});
 }
 final class AddToFavoriteSuccessfully extends GetProductsState{
   // final String message;
   // AddToFavoriteSuccessfully({required this.message});
 }
 final class RemoveFromFavoriteFailure extends GetProductsState{
-  final String errMessage;
+ final String errMessage;
+  final String arErrMessage;
 
-  RemoveFromFavoriteFailure({required this.errMessage});
+  RemoveFromFavoriteFailure({required this.errMessage, required this.arErrMessage});
 }
 final class RemoveFromFavoriteSuccessfully extends GetProductsState{
-  final String message;
-  RemoveFromFavoriteSuccessfully({required this.message});
+ // final String message;
+  RemoveFromFavoriteSuccessfully(
+    //required this.message
+    );
 }
 

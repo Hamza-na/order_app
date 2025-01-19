@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:order_app/features/home/presentation/widget/food_categorie.dart';
 import 'package:order_app/features/products/presentation/widget/products_bloc_builder.dart';
+import 'package:order_app/generated/l10n.dart';
 
 class ProductsScreen extends StatefulWidget {
   const ProductsScreen({super.key});
@@ -22,7 +22,7 @@ class _ProductHomeScreenState extends State<ProductsScreen> {
         child: Column(
           children: [
             _buildSearchSection(),
-            _buildCategoriesSection(),
+            
             const SizedBox(height: 20),
             ProductsBlocBuilder(isAdmin: false,),
             const SizedBox(height: 25),
@@ -38,9 +38,9 @@ class _ProductHomeScreenState extends State<ProductsScreen> {
       backgroundColor: Colors.redAccent,
       leading: const Icon(Icons.arrow_back_ios_new_rounded),
       centerTitle: true,
-      title: const Text(
-        "Search Foods",
-        style: TextStyle(fontSize: 20, fontWeight: FontWeight.w500),
+      title:  Text(
+        S.of(context).app_bar_products_screen,
+        style:const TextStyle(fontSize: 20, fontWeight: FontWeight.w500),
       ),
       actions: const [
         Padding(
@@ -53,16 +53,16 @@ class _ProductHomeScreenState extends State<ProductsScreen> {
 
   
   Padding _buildSearchSection() {
-    return const Padding(
+    return  Padding(
       padding: EdgeInsets.symmetric(vertical: 20),
       child: TextField(
         decoration: InputDecoration(
           filled: true,
           fillColor: Colors.white,
-          prefixIcon: Icon(Icons.search),
-          hintText: "Search for food...",
-          hintStyle: TextStyle(fontSize: 16, fontWeight: FontWeight.w400),
-          border: OutlineInputBorder(
+          prefixIcon:const  Icon(Icons.search),
+          hintText: S.of(context).search_hint_product_screen,
+          hintStyle: const TextStyle(fontSize: 16, fontWeight: FontWeight.w400),
+          border: const OutlineInputBorder(
             borderRadius: BorderRadius.all(Radius.circular(15)),
             borderSide: BorderSide.none,
           ),
@@ -71,14 +71,6 @@ class _ProductHomeScreenState extends State<ProductsScreen> {
     );
   }
 
-  /// Food Categories (placeholder)
-  Widget _buildCategoriesSection() {
-    return const FoodCategoriesWidget();
-  }
-
-
-
-  /// Single Product Card
 
 
 }

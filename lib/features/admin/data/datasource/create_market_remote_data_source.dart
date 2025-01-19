@@ -11,10 +11,11 @@ class CreateMarketRemoteDataSource {
     required this.api,
   });
 
-  Future<MarketReponseModel>createMarket({required MarketBodyModel createMarketBodyModel})
+  Future<dynamic>createMarket({required MarketBodyModel createMarketBodyModel})
   async{
-    final response =await api.post(EndPoints.markets,data: createMarketBodyModel.toJson());
-    return MarketReponseModel.fromJson(response);
+    final response =await api.post(EndPoints.markets,data: createMarketBodyModel.toJson(),isFormData: true);
+    print(response);
+    return response;
   }
   
 }

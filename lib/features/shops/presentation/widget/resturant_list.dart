@@ -5,42 +5,40 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:order_app/core/helper/extention.dart';
 import 'package:order_app/core/routing/routes.dart';
-import 'package:order_app/features/shops/data/models/sub_models.dart/markets_item_model.dart';
+import 'package:order_app/features/shops/data/models/sub_models.dart/market_sub_item_model.dart';
+import 'package:order_app/features/shops/domain/entities/sub_entity.dart/market_sub_item_entity.dart';
 import 'package:order_app/features/shops/presentation/cubit/markets_cubit.dart';
 
 class ResturantList extends StatelessWidget {
+  final List<MarketSubItemModel>? marketList;
 
- ResturantList({super.key,this.marketList,this.searchMarketList});
-
-  List<MarketsItemModel>?marketList;
-  List<MarketsItemModel>?searchMarketList;
-
+  ResturantList({super.key, this.marketList});
 
   @override
   Widget build(BuildContext context) {
-    return  ListView.builder(
-              shrinkWrap: true,
-              physics: const NeverScrollableScrollPhysics(),
-              itemCount:context.read<MarketsCubit>().searchController.text.isEmpty?marketList?.length:searchMarketList?.length,
-              itemBuilder: (context, index) {
-                final market = context.read<MarketsCubit>().searchController.text.isEmpty? marketList![index] :searchMarketList![index];
-                return resturantItem(context,market);
-              },
-            );
+    return ListView.builder(
+      shrinkWrap: true,
+      physics: const NeverScrollableScrollPhysics(),
+      itemCount: marketList?.length ?? 0,
+      itemBuilder: (context, index) {
+        final market = marketList![index];
+        return resturantItem(context, market);
+      },
+    );
   }
-  Padding resturantItem(BuildContext context,MarketsItemModel? market ) {
+  Padding resturantItem(BuildContext context,MarketSubItemModel? market ) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 8.0),
       child: GestureDetector(
         onTap: () {
-          context.pushNamed(Routes.productScreen,arguments: market?.marketItem.id);
+          context.pushNamed(Routes.productScreen,arguments: market?.id);
         },
         child: resturantCard(market),
       ),
     );
   }
 
-  Card resturantCard(MarketsItemModel? market) {
+  Card resturantCard(MarketSubItemModel? market) {
     return Card(
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(16),
@@ -59,7 +57,7 @@ class ResturantList extends StatelessWidget {
     );
   }
 
-  Positioned detailsUnderImage(MarketsItemModel ?market) {
+  Positioned detailsUnderImage(MarketSubItemModel ?market) {
     return Positioned(
       bottom: 0,
       left: 0,
@@ -115,9 +113,9 @@ class ResturantList extends StatelessWidget {
   //   );
   // }
 
-  Text resturantName(MarketsItemModel ?market) {
+  Text resturantName(MarketSubItemModel ?market) {
     return Text(
-      market?.marketItem.name ?? "name",
+      market?.name ?? "name",
       style: const TextStyle(
         color: Colors.white,
         fontSize: 18,
@@ -136,13 +134,13 @@ class ResturantList extends StatelessWidget {
     );
   }
 
-  Image resturantImage(MarketsItemModel ?market) {
-    if(market?.base64imgae == null ){
+  Image resturantImage(MarketSubItemModel ?market) {
+    if(market?.image == null ){
       return Image.asset("assets/images/shop3.jpg",fit: BoxFit.cover,height: 250,width: double.infinity,);
     }
-    String ?image = market?.base64imgae;
-      Uint8List imageBytes = base64Decode(image!);
-      return Image.memory(imageBytes, fit: BoxFit.cover, height: 250,
+      return Image.network
+      (
+      "${market!.image}", fit: BoxFit.cover, height: 250,
       width: double.infinity,
     );
     

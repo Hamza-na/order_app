@@ -15,34 +15,33 @@ part 'profile_state.dart';
 class ProfileCubit extends Cubit<ProfileState> {
   ProfileCubit() : super(UpdateProfileInitial());
 
-  TextEditingController nameController = TextEditingController();
-  TextEditingController locationController = TextEditingController();
-  XFile? image;
+  String ?addrees; 
 
-  eitherFailureOrUpdateProfile() async{
+
+
+  eitherFailureOrUpdateProfile(UpdateProfileBodyModel user) async{
     emit(UpdateProfileLoading());
-    final result = await sl<UpdateProfileRepository>().updateProfile(UpdateProfileBodyModel(
-        method: 'put',
-        name: nameController.text,
-        location: locationController.text,
-        image: File(image!.path),
-      )
-    );
+    final result = await sl<UpdateProfileRepository>().updateProfile(user);
 
       result.fold((failure) {
-        emit(UpdateProfileFailure(failure.errMessage));
+        emit(UpdateProfileFailure(errMessage: failure.errMessage,arErrMessage: failure.arErrMessage));
       }, (updateProfileResponseModel) {
         emit(UpdateProfileSuccessfully(updateProfileResponseModel));
+        eitherFailureOrGetMe();
       });
   }
-  eitherFailureOrGetMe() async{
-    emit(MeLoading());
+  eitherFailureOrGetMe() {
+    WidgetsBinding.instance.addPostFrameCallback((_)async {
+      emit(MeLoading());
     final result = await sl<MeRepository>().me();
 
       result.fold((failure) {
-        emit(MeFailure(failure.errMessage));
+        emit(MeFailure(errMessage: failure.errMessage,arErrMessage: failure.arErrMessage));
       }, (user) {
+        addrees = user.location;
         emit(MeSuccessfully(user));
       });
+    });
+    
   }
 }

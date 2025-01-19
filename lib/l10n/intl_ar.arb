@@ -1,35 +1,105 @@
 {
-    "on_boarding_title_page_one":"this is title",
-    "on_boarding_title_page_two":"",
-    "on_boarding_title_page_three":"",
+    "on_boarding_title_page_one":"كل ما تشتهيه بين يديك!",
+    "on_boarding_title_page_two":"تابع طلبك خطوة بخطوة",
+    "on_boarding_title_page_three":"عروض حصرية لعشاق الطعام",
+
+    "on_boarding_sub_title_page_one":"استكشف أشهى المأكولات والمطاعم بسهولة. اشبع شهيتك في أي وقت!",
+    "on_boarding_sub_title_page_two":"من المطبخ إلى باب بيتك، راقب طلبك في الوقت الفعلي. طعام طازج وسريع دائماً",
+    "on_boarding_sub_title_page_three":"استمتع بخصومات وعروض خاصة على وجباتك المفضلة. اجعل اللذة في متناول يدك!",
 
 
-    "title_login_screen":"",
-    "phone":"",
-    "login":"",
-    "dont_have_account":"",
-    "register_here":"",
+    "title_login_screen":"تسجيل الدخول لحسابك",
+    "phone":"رقم الموبايل:",
+    "phone_confiramtion":"تأكيد رقم الموبايل:",
+    "phone_condition_count_number":"يجب ان يكون 10 ارقام",
+    "phone_condition_number":"الادخال يجب ان يكون ارقام ",
+    "phone_confirmation_condition":"الرقم غير متطابق",
+    "login":"تسجيل دخول",
+    "dont_have_account":"ليس لديك حساب ؟",
+    "register_here":"انشاء حساب هنا",
+    "create_new_account":"انشاء حساب جديد",
+    "validate_null":"الحقل لا يمكن ان يكون فارغ",
 
 
     "title_register_screen":"",
-    "name":"",
-    "loacation":"",
-    "upload_your_image":"",
-    "regisger":"",
-    "already_have_account":"",
-    "login_here":"",
+    "name":"الاسم :",
+    "name_condition":"الاسم يجب ان يكون بين 3 الى 20 حرف",
+
+    
+    "loacation":"الموقع:",
+    "loacation_condition":"يحب ان يكون بين 3 الى 200 حرف",
+    "upload_your_image":"ارفع صورتك :",
+    "regisger":"انشاء حساب",
+    "already_have_account":"لديك حساب بالفعل ؟",
+    "login_here":"تسجيل الدخول هنا",
 
 
 
 
-    "search_hint_home_scree":"",
-    "container_text_home_screen":"",
+    "search_hint_home_screen":"البحث عن مطاعم...",
+    "search_hint_product_screen":"البحث عن اصناف اكل...",
+
+    "container_text_home_screen":"اكتشف مطاعم متميزة !",
+
+    "app_name":"App Name",
+    "app_bar_products_screen":"واجهة المنتجات",
+    "app_bar_products_details_screen":"تفاصيل المنتج",
+
+
+    "details":"التفاصيل",
+    "time":"15 دقيقة",
+    "rating":"4.5 تقييمم",
+    "show_cart":"الذهاب الى السلة",
+    "check_out":"المتابعة",
+
+
+    "price":"السعر",
+    "delivery_cost":"سعر التوصيل :",
+    "delivery_time":"وقت التوصيل :",
+
+
+    "address":"العنوان",
+    "order":"اطلب",
+    "update":"تحديث",
+    "no_address_selected":"لم يتم تحديد موقع",
+    "change":"تغير",
+    "edit_address":"تعديل الموقع",
+    "location_name":"اسم الموقع",
+    "location_name_hint":"مثال: المنزل، العمل، الجيم، المدرسة، إلخ",
+    "town_name":"المنطقة",
+    "town_hint":"بلدية الميدان",
+    "street":"الشارع",
+    "address_details":"تفاصيل العنوان",
+    "address_detail_hint":"مثال: المبنى الأول، الطابق 2، ثم اضغط على الجرس، أو اترك الطرد بجانب الباب.",
+    "waiting_for_response":"انتظار الرد ",
+    "in_way":"في الطريق",
+    "delivered":"تم التوصيل",
+    "period_of_editing":"وقت التعديل",
+    "order_status":"حالة الطلب",
+    "order_details":"تفاصيل الطلب",
+    "quantity":"الكمية",
+    "total_price":"السعر الكلي",
+
+    "log_out":"تسجيل خروج",
+
+
+    "profile":"الصفحة الشخصية",
+    "edit_profile":"تعديل الحساب",
+    "language":"اللغة",
+    "select_Language":"اختيار اللغة",
+    "cancel":"الغاء",
+    "no_change":"لا يوجد تعديل تم القيام به",
+
+
+    "my_orders" :"طلباتي",
 
 
 
-    "home":"",
-    "likes":"",
-    "cart":""
+
+    "home":"الصفحة الرئيسية",
+    "likes":"المفضلة",
+    "cart":"السلة",
+    "settings":"Settings"
 
 
 

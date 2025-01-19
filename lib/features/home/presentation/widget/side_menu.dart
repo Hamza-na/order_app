@@ -20,10 +20,7 @@ class _SideMenuState extends State<SideMenu> {
       const Icon(Icons.star_border_outlined),
       const Icon(Icons.chat),
     ];
-    final List<Icon> sideMenu2Icons = [
-      const Icon(Icons.history),
-      
-    ];
+    
 
     return Scaffold(
       body: Container(
@@ -54,30 +51,6 @@ class _SideMenuState extends State<SideMenu> {
                   Icon icon = entry.value;
                   return SideMenuTile(
                     title: "home",
-                    icon: icon,
-                    isActive: activeIndex == index, // Pass the active state
-                    onTap: () {
-                      setState(() {
-                        activeIndex = index; // Update the active tile
-                      });
-                    },
-                  );
-                }),
-                Padding(
-                  padding: const EdgeInsets.only(left: 24, top: 32, bottom: 16),
-                  child: Text(
-                    "History".toUpperCase(),
-                    style: Theme.of(context)
-                        .textTheme
-                        .titleMedium!
-                        .copyWith(color: Colors.white70),
-                  ),
-                ),
-                ...sideMenu2Icons.asMap().entries.map((entry) {
-                  int index = entry.key + sideMenuIcons.length; 
-                  Icon icon = entry.value;
-                  return SideMenuTile(
-                    title: "",
                     icon: icon,
                     isActive: activeIndex == index, 
                     onTap: () {
@@ -126,7 +99,7 @@ class SideMenuTile extends StatelessWidget {
               curve: Curves.fastOutSlowIn,
               height: 56,
               left: 0,
-              width: isActive ? 288 : 0, // Toggle width
+              width: isActive ? 288 : 0, 
               child: Container(
                 decoration: const BoxDecoration(
                   color: primaryColor,
@@ -135,7 +108,7 @@ class SideMenuTile extends StatelessWidget {
               ),
             ),
             ListTile(
-              onTap: onTap, // Call the callback when clicked
+              onTap: onTap, 
               leading: SizedBox(
                 height: 32,
                 width: 34,

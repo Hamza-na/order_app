@@ -7,7 +7,7 @@ class ToUserRemoteDataSource {
   ToUserRemoteDataSource({required this.api});
 
   Future<dynamic>toUser(int adminId)async{
-    final response =await api.post("${EndPoints.toUser}/$adminId");
+    final response =await api.get("${EndPoints.toUser}/$adminId");
     return response;
   }
 

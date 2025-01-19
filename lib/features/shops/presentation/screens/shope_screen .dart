@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:order_app/core/constant/colors/colors.dart';
 import 'package:order_app/features/shops/presentation/cubit/markets_cubit.dart';
 import 'package:order_app/features/shops/presentation/widget/market_bloc_builder.dart';
+import 'package:order_app/generated/l10n.dart';
 
 class ShopsScreen extends StatelessWidget {
   const ShopsScreen({super.key});
@@ -10,30 +11,27 @@ class ShopsScreen extends StatelessWidget {
   //List<MarketsItemModel>marketList ;
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => MarketsCubit()..eitherFailureOrMarktes(),
-      child: Scaffold(
-        appBar: shopsAppBar(),
-        body: Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: SingleChildScrollView(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Container(
-                  decoration: appBarDecoration(),
-                  child: textFieldSearchResturant(context),
-                ),
-                const SizedBox(height: 20),
-                Container(
-                  padding:
-                      const EdgeInsets.symmetric(vertical: 20, horizontal: 24),
-                  decoration: containerDecoration(),
-                  child: textContainer(),
-                ),
-                MarketBlocBuilder(isAdmin: false,)
-              ],
-            ),
+    return Scaffold(
+      appBar: shopsAppBar(),
+      body: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Container(
+                decoration: appBarDecoration(),
+                child: textFieldSearchResturant(context),
+              ),
+              const SizedBox(height: 20),
+              Container(
+                padding:
+                    const EdgeInsets.symmetric(vertical: 20, horizontal: 24),
+                decoration: containerDecoration(),
+                child: textContainer(context),
+              ),
+              MarketBlocBuilder(isAdmin: false,)
+            ],
           ),
         ),
       ),
@@ -53,9 +51,9 @@ class ShopsScreen extends StatelessWidget {
     );
   }
 
-  Text textContainer() {
+  Text textContainer(BuildContext context) {
     return Text(
-      'Discover Amazing Restaurants!',
+      S.of(context).container_text_home_screen,
       style: TextStyle(
         fontSize: 20,
         fontWeight: FontWeight.bold,
@@ -86,16 +84,16 @@ class ShopsScreen extends StatelessWidget {
   TextField textFieldSearchResturant(BuildContext context) {
     return  TextField(
       controller:context.read<MarketsCubit>().searchController ,
-      decoration:const InputDecoration(
-        prefixIcon: Icon(Icons.search, color: Colors.grey),
-        hintText: 'Search food...',
-        hintStyle: TextStyle(color: Colors.grey),
+      decoration: InputDecoration(
+        prefixIcon: const Icon(Icons.search, color: Colors.grey),
+        hintText: S.of(context).search_hint_home_screen,
+        hintStyle: const TextStyle(color: Colors.grey),
         border: InputBorder.none,
-        contentPadding: EdgeInsets.symmetric(vertical: 15, horizontal: 20),
+        contentPadding:const  EdgeInsets.symmetric(vertical: 15, horizontal: 20),
         
       ),
       onTap:(){
-        _startSearch(context);
+        //_startSearch(context);
       },
       onChanged: (searchedShop){
         context.read<MarketsCubit>().eitherFailureOrSearchMarktes(searchedShop);
@@ -103,14 +101,15 @@ class ShopsScreen extends StatelessWidget {
     );
   }
 
-  void _startSearch(BuildContext context) {
-    ModalRoute.of(context)!
-        .addLocalHistoryEntry(LocalHistoryEntry(onRemove: _clearSearch(context)));
-  }
-  dynamic _clearSearch(BuildContext context) {
-      context.read<MarketsCubit>().searchController.clear();
-    }
-  }
+  // void _startSearch(BuildContext context) {
+  //   ModalRoute.of(context)!
+  //       .addLocalHistoryEntry(LocalHistoryEntry(onRemove: _clearSearch(context)));
+  // }
+  // dynamic _clearSearch(BuildContext context) {
+  //     context.read<MarketsCubit>().searchController.clear();
+  //   }
+   }
+
   BoxShadow appBarShadow() {
     return BoxShadow(
       color: Colors.grey.withOpacity(0.2),
@@ -122,7 +121,7 @@ class ShopsScreen extends StatelessWidget {
   AppBar shopsAppBar() {
     return AppBar(
       title: const Text(
-        'App Name',
+        'ITE ORDER',
       ),
       backgroundColor: primaryColor,
       centerTitle: true,
@@ -142,4 +141,3 @@ class ShopsScreen extends StatelessWidget {
       ],
     );
   }
-
