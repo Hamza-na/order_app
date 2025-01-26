@@ -34,6 +34,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "app_bar_products_screen":
             MessageLookupByLibrary.simpleMessage("Products Screen"),
         "app_name": MessageLookupByLibrary.simpleMessage("App Name"),
+        "available_quantity":
+            MessageLookupByLibrary.simpleMessage("Available Qauntity"),
         "cancel": MessageLookupByLibrary.simpleMessage("cancel"),
         "cart": MessageLookupByLibrary.simpleMessage("Cart"),
         "change": MessageLookupByLibrary.simpleMessage("change"),
@@ -86,8 +88,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "order": MessageLookupByLibrary.simpleMessage("Order"),
         "order_details": MessageLookupByLibrary.simpleMessage("Order Details"),
         "order_status": MessageLookupByLibrary.simpleMessage("Order Status"),
-        "period_of_editing":
-            MessageLookupByLibrary.simpleMessage("Period of editing"),
+        "period_of_editing": MessageLookupByLibrary.simpleMessage("preparing"),
         "phone": MessageLookupByLibrary.simpleMessage("Phone :"),
         "phone_condition_count_number":
             MessageLookupByLibrary.simpleMessage("phone must be 10 number"),
@@ -124,7 +125,6 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Upload Your Image :"),
         "validate_null":
             MessageLookupByLibrary.simpleMessage("value cannot be empty"),
-        "waiting_for_response":
-            MessageLookupByLibrary.simpleMessage("Waiting for response")
+        "waiting_for_response": MessageLookupByLibrary.simpleMessage("Waiting")
       };
 }

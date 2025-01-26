@@ -96,7 +96,7 @@ class ProductDetails extends StatelessWidget {
           children: [
             Row(
               children: [
-                const Text("Available Quantity:"),
+                Text("${S.of(context).available_quantity}:"),
                 Text(
                     '${data == null ? product.productModelOfResturant.availableQuantity :  data.availableQuantity}'),
               ],
@@ -118,7 +118,7 @@ class ProductDetails extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text(
-              'Total Price: \$${data == null ? ((product.productModelOfResturant.countInCart) * (product.productModelOfResturant.price)).toStringAsFixed(2):data.totalPrice}',
+              '${S.of(context).total_price}: \$${data == null ? ((product.productModelOfResturant.countInCart) * (product.productModelOfResturant.price)).toStringAsFixed(2):data.totalPrice}',
               style: const TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
             ),
             addToCartButton(context),

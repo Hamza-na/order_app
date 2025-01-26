@@ -580,10 +580,10 @@ class S {
     );
   }
 
-  /// `Waiting for response`
+  /// `Waiting`
   String get waiting_for_response {
     return Intl.message(
-      'Waiting for response',
+      'Waiting',
       name: 'waiting_for_response',
       desc: '',
       args: [],
@@ -610,10 +610,10 @@ class S {
     );
   }
 
-  /// `Period of editing`
+  /// `preparing`
   String get period_of_editing {
     return Intl.message(
-      'Period of editing',
+      'preparing',
       name: 'period_of_editing',
       desc: '',
       args: [],
@@ -775,6 +775,16 @@ class S {
     return Intl.message(
       'Settings',
       name: 'settings',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Available Qauntity`
+  String get available_quantity {
+    return Intl.message(
+      'Available Qauntity',
+      name: 'available_quantity',
       desc: '',
       args: [],
     );

@@ -108,7 +108,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "search_hint_product_screen":
             MessageLookupByLibrary.simpleMessage("البحث عن اصناف اكل..."),
         "select_Language": MessageLookupByLibrary.simpleMessage("اختيار اللغة"),
-        "settings": MessageLookupByLibrary.simpleMessage("Settings"),
+        "settings": MessageLookupByLibrary.simpleMessage("اعدادات"),
         "show_cart": MessageLookupByLibrary.simpleMessage("الذهاب الى السلة"),
         "street": MessageLookupByLibrary.simpleMessage("الشارع"),
         "time": MessageLookupByLibrary.simpleMessage("15 دقيقة"),

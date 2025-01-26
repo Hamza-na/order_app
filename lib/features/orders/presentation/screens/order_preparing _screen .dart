@@ -8,6 +8,7 @@ import 'package:order_app/core/models/sub_models/orders_item_model.dart';
 import 'package:order_app/core/routing/routes.dart';
 import 'package:order_app/features/orders/presentation/cubit/orders_cubit.dart';
 import 'package:order_app/features/orders/presentation/cubit/orders_state.dart';
+import 'package:order_app/generated/l10n.dart';
 
 class OrderStatusScreen extends StatefulWidget {
   const OrderStatusScreen({super.key, 
@@ -134,6 +135,9 @@ class _OrderStatusScreenState extends State<OrderStatusScreen> {
                   id: widget.ordersItemModel.id,
               );
               widget.ordersItemModel.status = "Deleted";
+              setState(() {
+                
+              });
           }
         else if(widget.ordersItemModel.status == "Deleted") {
           context.read<OrdersCubit>().eitherFailureOrRestore(id: widget.ordersItemModel.id);
@@ -265,13 +269,13 @@ Widget buildOrderInfoCard({required CartProductModelWithImage product}) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        _buildStepIcon(Icons.pending_actions, "Waiting", 0, currentStep),
+        _buildStepIcon(Icons.pending_actions, S.of(context).waiting_for_response, 0, currentStep),
         _buildStepLine(0, currentStep),
-        _buildStepIcon(Icons.local_dining, "Preparing", 1, currentStep),
+        _buildStepIcon(Icons.local_dining, S.of(context).period_of_editing, 1, currentStep),
         _buildStepLine(1, currentStep),
-        _buildStepIcon(Icons.directions_car, "In Way", 2, currentStep),
+        _buildStepIcon(Icons.directions_car, S.of(context).in_way, 2, currentStep),
         _buildStepLine(2, currentStep),
-        _buildStepIcon(Icons.check_circle, "Delivered", 3, currentStep),
+        _buildStepIcon(Icons.check_circle, S.of(context).delivered, 3, currentStep),
       ],
     );
   }

@@ -12,7 +12,7 @@ class UpdateProductRemoteDataSource {
   });
 
   Future<dynamic>updateProduct({required  UpdateProductBodyModel productBodyModel,required int productId})async{
-    final response = await api.post('${EndPoints.logOut}/$productId',data: productBodyModel.toJson(),isFormData:  true);    return response;
+    final response = await api.post('${EndPoints.products}/$productId',data: productBodyModel.toJson(),isFormData:  true);    return response;
   }
 
 }

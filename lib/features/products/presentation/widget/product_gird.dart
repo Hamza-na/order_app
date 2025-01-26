@@ -99,14 +99,19 @@ class ProductGird extends StatelessWidget {
       );
   }
 
-    Image imageOfProduct(ProductModelOfResturantWithImage ?product) {
+    Widget imageOfProduct(ProductModelOfResturantWithImage ?product) {
 
       if(product?.image == null ){
       return Image.asset("assets/images/shop3.jpg",fit: BoxFit.cover,height: 100,width: 100,);
      }
-      return Image.network
-      (
-      "${product!.image}", fit: BoxFit.cover, height: 100,width: 100,
+      return Container(
+        decoration:  BoxDecoration(
+          borderRadius: BorderRadius.circular(20)
+        ),
+        child: Image.network
+        (
+        "${product!.image}", fit: BoxFit.cover, height: 100,width: 100,
+        ),
       );
 
     }

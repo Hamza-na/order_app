@@ -181,7 +181,7 @@ class ProductDialog extends StatelessWidget {
                         if (value == null || value.isEmpty) {
                           return "Description must be between 3 and 200 characters.";
                         }
-                        if (value.length < 3 || value.length > 20) {
+                        if (value.length < 3 || value.length > 200) {
                           return "Description must be between 3 and 200 characters.";
                         }
                         return null;

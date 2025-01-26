@@ -70,10 +70,10 @@
     "street":"Street",
     "address_details":"Address Details",
     "address_detail_hint":"example: first Build, second floor....",
-    "waiting_for_response":"Waiting for response",
+    "waiting_for_response":"Waiting",
     "in_way":"In Way",
     "delivered":"Delivered",
-    "period_of_editing":"Period of editing",
+    "period_of_editing":"preparing",
     "order_status":"Order Status",
     "order_details":"Order Details",
     "quantity":"Quantity",
@@ -96,8 +96,11 @@
     "home":"Home",
     "likes":"Likes",
     "cart":"Cart",
-    "settings":"Settings"
+    "settings":"Settings",
+    "available_quantity":"Available Qauntity"
 
+
+    
 
 
 

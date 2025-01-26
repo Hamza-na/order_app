@@ -27,14 +27,14 @@ Future<void> main() async {
       ),
     );
   }
-
+  //await SharedPrefHelper.clearAllData();
   await init();
   final isLoggedIn = await isUserLoggedIn();
   
 
   runApp(MyApp(
     appRouter: AppRouter(),
-    initialRoute: isLoggedIn ? Routes.entryPoint : Routes.order,
+    initialRoute: isLoggedIn ? Routes.entryPoint : Routes.loginScreen,
   ));
 }
 

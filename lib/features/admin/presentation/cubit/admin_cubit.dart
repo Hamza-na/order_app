@@ -1,5 +1,5 @@
 import 'dart:convert';
-//import 'dart:html' as html;
+import 'dart:html' as html;
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -55,26 +55,26 @@ class AdminCubit extends Cubit<AdminState> {
 
 
   startWebFilePicker() async {
-  //   html.FileUploadInputElement uploadInput = html.FileUploadInputElement();
-  //   uploadInput.multiple = true;
-  //   uploadInput.draggable = true;
-  //   uploadInput.click();
+    html.FileUploadInputElement uploadInput = html.FileUploadInputElement();
+    uploadInput.multiple = true;
+    uploadInput.draggable = true;
+    uploadInput.click();
 
-  //   uploadInput.onChange.listen((event) {
-  //     final files = uploadInput.files;
-  //     final file = files![0];
-  //     final reader = html.FileReader();
+    uploadInput.onChange.listen((event) {
+      final files = uploadInput.files;
+      final file = files![0];
+      final reader = html.FileReader();
 
-  //     reader.onLoadEnd.listen((event) {
+      reader.onLoadEnd.listen((event) {
         
-  //         bytesData =
-  //           const  Base64Decoder().convert(reader.result.toString().split(",").last);
-  //         selectedFile = bytesData;
-  //         emit(UploadImageSuccessfully());
+          bytesData =
+            const  Base64Decoder().convert(reader.result.toString().split(",").last);
+          selectedFile = bytesData;
+          emit(UploadImageSuccessfully());
       
-  //     });
-  //     reader.readAsDataUrl(file);
-  //   });
+      });
+      reader.readAsDataUrl(file);
+    });
    }
 
   
